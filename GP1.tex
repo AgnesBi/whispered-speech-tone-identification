@@ -102,6 +102,18 @@
 \makeatother        % cross referencing existing example
 
 \usepackage[linguistics]{forest}
+    \forestset{
+      nicer nodes/.style={
+        for tree={
+          l =1cm,
+          l sep=0pt, 
+          s sep=0pt,
+          inner sep=0pt,
+          fit=band,
+        },
+      },
+      default preamble=nicer nodes,
+    }
 
 % USER-DEFINED COMMANDS
 \makeatletter
@@ -142,7 +154,8 @@
 \setlength{\abovedisplayshortskip}{0pt}
 \setlength{\belowdisplayshortskip}{0pt}
 
-\singlespacing
+\onehalfspacing
+%\singlespacing
 
 \maketitle
 
@@ -537,7 +550,7 @@ The reasoning process is sketched in the figure below -- the shaded box is what 
      \caption{Pragmatic reasoning process for \ref{even-base-objF}}
 \end{figure}
 
-The reversed, negative, inference of \ref{even-base-subF} falls out straightforwardly from the same reasoning process. Let's assume that negative gradable predicates share the same fields as their positive counterparts, but with the opposite relations. Starting with the alternative set \{$\pi$ is taller than Blake | $\pi \in \textsc{ALT(Alex)}$\}, the classic (un)-likelihood analysis requires that \textit{p} `Alex is taller than Blake' is the least likely among its alternatives. The relevant \textsc{g} is again the property \textit{tall}, $x =$ Alex, $y =$ everyone else considered in the alternatives, and $z =$ Blake. By part (b) of the likelihood-to-degree mapping, to accommodate the said probability rankings, we accommodate at the same time that Alex is the shortest within the comparison class. By the Alternative-sampling Hypothesis, since the comparison class is a representative sample of a normal distribution, Alex is shorter than population median. Lastly, assuming the prejacent to be \textsc{True}, Alex, albeit short, is taller than Blake, so Blake must be short as well. 
+The reversed, negative, inference of \ref{even-base-subF} falls out straightforwardly from the same reasoning process. Let's assume that negative gradable predicates share the same fields as their positive counterparts, but with the opposite relations. Starting with the alternative set \{$\pi$ is taller than Blake | $\pi \in \textsc{ALT(Alex)}$\}, the classic (un)-likelihood analysis requires that \textit{p} `Alex is taller than Blake' is the least likely among its alternatives. The relevant \textsc{g} is again the property \textit{tall}, $x =$ Alex, $y =$ everyone else considered in the alternatives, and $z =$ Blake. By part (b) of the likelihood-to-degree mapping, to accommodate the said likelihood rankings, we accommodate at the same time that Alex is the shortest within the comparison class. By the Alternative-sampling Hypothesis, since the comparison class is a representative sample of a normal distribution, Alex is shorter than population median. Lastly, assuming the prejacent to be \textsc{True}, Alex, albeit short, is taller than Blake, so Blake must be short as well. 
 
 \begin{figure}[h]
   \vspace{0.25cm}
@@ -749,102 +762,76 @@ I have proposed two general cooperative principles governing how rational agents
 
 \subsection{Concessive \textit{at least}} 
 
+It has been noted that \textit{even} under negation invokes a scale reversal in inferences (\cite{karttunen_conventional_1979}), which is indeed what we observe in the comparative sentences below:
+
+\ex. \a. Kimberly is even taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{tall}] 
+\b. Kimberly is \underline{not} even taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{short}] \label{not-even-objF}
+
+\ex. \a. [Kimberly]\sub{F} is even taller than Simona. \alignright [\infer Both are \textbf{short}] 
+\b. [Kimberly]\sub{F} is \underline{not} even taller than Simona. \alignright [\infer Both are \textbf{tall}] \label{not-even-subF}
+
+Under the NPI theory of \textit{even} (\cite{rooth_association_1985}, \cite{rullmann_even_1997}, \cite{giannakidou_landscape_2007})\footnote{NPIs (negative polarity items) are lexical items that are only licensed in negative, downward entailing, or nonveridical environments. I believe we will arrive at the same result following scope theory of \textit{even}, and hence, at least for the time being, I will remain neutral in this debate.}, the scalar particle \textit{even} is lexically ambiguous between an `ordinary' meaning and a NPI meaning licensed only in the scope of a downward-entailing operator. The classic (un)-likelihood analysis \ref{classicunlikelihood} states `ordinary' \textit{even} presupposes that its prejacent is the least likely among its alternatives, and since NPI \textit{even} is associated with the opposite side of the scale to `ordinary' \textit{even}, we have
+
+\ex. \label{NPI-even} $|[\textit{even}\sub{\textsc{npi}}|]^{g, c} = \lambda C. \lambda p : \forall q \in C \, [q \neq p \rightarrow q <_{\text{likely}} p]. p$ \\ i.e., the prejacent \textit{p} is the \textbf{most} likely among its alternatives in the context C
+
+The evaluative inferences in \ref{not-even-objF} and \ref{not-even-subF} can be derived following the analysis proposed in the last section. Let us assume the LF below for both sentences,
+
+\ex. \begin{forest}
+    [TP$_2$ 
+        [\textit{not}]
+        [ 
+            [\textit{even}\sub{\textsc{npi}}]
+            [TP$_1$, name=target[\textit{\footnotesize Kimberly is taller than Simona}, roof]]  
+        ]   
+    ]
+\end{forest}
+
+but difference in focus placement triggers distinct alternatives. 
+
+For \ref{not-even-objF}, the meaning of NPI \textit{even} in \ref{NPI-even} presupposes that TP$_1$ \textit{Kimberly is taller than Simona} is the most likely among its alternatives \{Kimberly is taller than $\pi$ | $\pi \in \textsc{ALT(Simona)}$\}. Because negation is a presupposition `hole’ which allows the presuppositions of its complement pass through unchanged (\cite{horn_presuppositional_1969}), TP$_2$ carries the same presupposition. Note the relevant \textsc{g} is the property \textit{tall}, $x =$ everyone else considered in the alternatives, $y = $ Simona, and $z =$ Kimberly. By part (a) of the likelihood-to-degree mapping, to accommodate the said likelihood rankings, we accommodate at the same time that everyone else is taller than Simona, i.e., Simona is the shortest within the comparison class. By the Alternative-sampling Hypothesis, since the comparison class is a representative sample of a normal distribution, Simona is shorter than population median. Finally, assuming the entire proposition \textit{Kimberly is not even taller than Simona} is \textsc{true}, Kimberly is not taller than Simona, so Kimberly must be short as well.
+
+The exact same reasoning applies to \ref{not-even-subF} except now the alternative set is \{$\pi$ is taller than Simona | $\pi \in \textsc{ALT(Kimberly)}$\}, and part (b) of the likelihood-to-degree mapping becomes relevant.
+
 % AT LEAST? NOT EVEN!
 % NEUTRAL CONTEXT: cat-sitting: cat weights and how much they are fed
 % TRY: analyzing comparatives in terms of negation; start with a simple analysis and see how far it goes
 
-\cite{rullmann_more_2009} notes a connection between negative polarity item (NPI)\footnote{NPIs are lexical items that are only licensed in negative, downward entailing, or nonveridical environments.} \textit{even} and \textit{at least}. First, NPI \textit{even} and \textit{at least} can often be used almost interchangeably, both being associated with the lower end of a scale:
+\cite{rullmann_more_2009} notes a connection between NPI \textit{even} and \textit{at least}. First, NPI \textit{even} and \textit{at least} can often be used almost interchangeably, both being associated with the lower end of a scale:
 
 \ex. If you answer \textbf{at least} / \textbf{even} one question correctly, you'll pass. \\ \alignright (\cite{rullmann_more_2009}, p. 12)
 
-Second, some crosslinguistic evidence suggests that \textit{at least} and \textit{even} are related:
+Second, some crosslinguistic evidence appears to suggest that \textit{at least} and \textit{even} are related:
 
 \ex. \a. \begin{tabular}[t]{llp{1cm}ll}
 \multicolumn{2}{c}{Dutch} & & \multicolumn{2}{c}{Japanese} \\\hline
 \textit{zelfs} & \textit{maar} & & \textit{-dake} & \textit{-demo}\\
 even & only & & only & even\\
-\multicolumn{2}{c}{$=$ NPI `even'} & & \multicolumn{2}{c}{$=$ `at least'}        
+\multicolumn{2}{c}{$=$ NPI `even'} & & \multicolumn{2}{c}{$=$ `at least'}
 \end{tabular}
 \b. Greek \textit{esto} is sometimes translated as `even' and sometimes as `at least' \\ \alignright (\cite{rullmann_more_2009}, p. 17)
 
-Although there are subtle differences in meaning between the two, a natural question to ask, for our purpose, is whether similar evaluative inferences are observed in comparative sentences with \textit{at least}. Unfortunately, the intuition is not very clear here. The epistemic reading of \textit{at least}, which signals the speaker is uncertain about the exact height of Kimberly in \Next[a] or the exact height of Simona in \Next[b], is so conspicuous that it is difficult to access the intended concessive reading without a specific context. This significant confound aside, interestingly, a few native speakers reported the following judgment:
 
-\ex. \label{at-least} \a. Kimberly is at least taller than [Simona]\sub{F}. \label{neg-atleast} \alignright [\infer Both are \textbf{short}]
-\b. At least [Kimberly]\sub{F} is taller then Simona. \label{pos-atleast} \alignright [?\infer Both are \textbf{tall}]
-% can "at least" back associate?
+Although there are subtle differences in meaning between NPI \textit{even} sentences and their \textit{at least} counterparts, a natural question to ask is whether similar inference patterns are observed in comparative sentences with \textit{at least}. 
 
-As a first stab, let's adopt the naive assumption that concessive \textit{at least} has the same denotation as NPI \textit{even}, and takes scope over matrix TP.
+\ex. \label{at-least} \a. Kimberly is at least taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{short}] \label{neg-atleast} 
+\b. [Kimberly]\sub{F}, at least, is taller then Simona. \alignright [??\infer Both are \textbf{tall}] \label{pos-atleast} 
+% Can "at least" back associate?
 
-\ex. $|[\textit{at least}|]^{g, c} = |[\textit{even}\sub{\textsc{npi}}|]^{g, c} = \lambda C. \lambda p : \forall q \in C \, [q \neq p \rightarrow q <_{\text{likely}} p]. p$ \\ i.e., the prejacent \textit{p} is the \textbf{most} likely among its alternatives in the context C
+%\ex. \a. ??John is not at least taller than \textsc{Bill}.
+%\b. \textsc{John}, at least, is not taller than Bill. \alignright \textsc{even} >> $\neg$ ?
 
+% not at least = not <not \textit{even}> in competition with \textit{even}?
 
+Unfortunately, the intuition is not very clear here. The epistemic reading of \textit{at least}, which signals the speaker is uncertain about the exact height of Kimberly in \Next[a] or the exact height of Simona in \Next[b], is so conspicuous that it is difficult to access the intended concessive reading without a specific context. This significant confound aside, interestingly, a few native speakers did report the judgment above.
 
+It is unclear why the judgment for \Last[a] is much clearer than that of \Last[b], and 
 
-
-
-
-
-
-
-
-
-
-\newpage
-
-These inferences, if available
-
-
-> Crnic 2011
-> Krifka (1999)
-
-
-
-
-Following this line of analysis, let's suppose both \textit{at least} examples assert the truth of their prejacent \textit{John is taller than Bill}. However, as the exact opposite of \textit{even}, \textit{at least} presupposes that the state of John being taller than Bill is the most likely among its alternatives:
-
-Again consider the alternatives of \ref{pos-atleast} and \ref{neg-atleast}:
-
-\ex. Alternatives of \ref{pos-atleast} =  \{Jill is taller than Bill, Amy is taller than Bill, Peter is taller than Bill, Lesley is taller than Bill, ... \} \\
-Alternatives of \ref{neg-atleast} =  
-
-For \ref{pos-atleast}, John is the most likely person to be taller than Bill, we infer that john is tall. For \ref{neg-atleast}, Bill is the most likely person for Bill to be taller than, hence we derive that Bill is short.
-
-The arguments go through, and we reach the desired inferences. The idea of \textit{at least} imposing partial ordering relations on the alternatives triggered in the context is not a new one (see \cite{krifka_at_1999}, \cite{geurts_at_2007}, \cite{nakanishi_epistemic_2009}). \cite{krifka_at_1999} proposed an analysis along a similar line for sentences such as:
-
-\ex. \a. At least \textsc{three} boys ate at least \textsc{seven} apples.
-\b. Mary is at least an \textsc{associate} professor (perhaps even a full professor).
-
-Hence my proposal here is simply to add likelihood as a possible dimension of scale for concessive uses of \textit{at least}.
-
-To sum up, my initial hypothesis is that \textit{even} and \textit{at least} are sentential operators that impose opposite scalar presuppositions over their focus alternatives. However, how the evaluative inferences arise in \ref{pos} and \ref{neg} is a lot more nuanced and deserves further investigation.
-
-The part of the sentence that answers the question under discussion bears focus,
-
-focal emphasis vs. topic emphasis
-
-Beaver \& Clark 2008
-
-However, this account suffers from various issues.
-
-
-
-
-
-
-Consider \textit{even} under negation. It's been observed in the literature that \textit{even} under negation invokes scale reversal.
-
-\ex. \a. John is not even taller than \textsc{Bill}.  $=$ John is at least taller than \textsc{Bill}.
-\b. \textsc{John} is not even taller than Bill. $=$ \textsc{John}, at least, is  taller than Bill.
-
-\ex. \a. ??John is not at least taller than \textsc{Bill}.
-\b. \textsc{John}, at least, is not taller than Bill. \alignright \textsc{even} >> $\neg$ ?
-
-not <not \textit{even}> in competition with \textit{even}?
+\subsection{Mandarin scalar particle \textit{h\'{a}i}} 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\subsection{Mandarin scalar particle \textit{h\'{a}i}} 
+
 
 > Liu 2017
 
@@ -947,6 +934,8 @@ Z. compared-to L. \textsc{hai} \textsc{cop} short   \textsc{de} \\
 
 % How the analysis can be readily extended to other scalar particles??
 further research: more concrete proposals 
+
+how the evaluative inferences arise is quite nuanced and easy to dismiss/overlook.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

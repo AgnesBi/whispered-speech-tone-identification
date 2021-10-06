@@ -1,1 +1,1 @@
-# GeneralsPaper
+# Generals Paper

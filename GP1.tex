@@ -1,0 +1,926 @@
+\documentclass[12pt,letterpaper]{scrartcl}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}   % change spacing
+\usepackage{times}  % Times New Roman
+\usepackage[T1]{fontenc}    % Enable Type 1 font encoding (Cork Encoding)
+\usepackage[english]{babel}     % Language settings
+    %\renewcommand{\thesection}{\Roman{section}}
+
+\usepackage{amsfonts,amssymb}
+\usepackage[fleqn]{amsmath}
+    \usepackage{mathtools}
+    \usepackage{cases}
+\usepackage{graphicx}	% re-scale tree: \resizebox{}
+\usepackage{cancel} % \cancel{}
+
+\usepackage{comment}    % for multi-line comments
+
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+\usepackage{xcolor,soul}
+\sethlcolor{gray!25}
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+
+\usepackage[normalem]{ulem} % strikethrough text \sout{}
+
+
+%%% Flow chart
+\usepackage{tikz}
+    \usetikzlibrary{decorations.pathreplacing,angles,quotes}
+	\usetikzlibrary{shapes.geometric, arrows}
+	\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, text width=5cm,draw=black, fill=gray!25]
+	\tikzstyle{process} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, text width=3.5cm,draw=black, fill=white]	
+	\tikzstyle{arrow} = [thick,->,>=stealth]
+\usepackage{adjustbox}
+
+%%% Plotting Beta distribution
+\usepackage{pgfplots}
+\pgfplotsset{width=7.5cm,compat=1.9}
+    % define a command which stores all commands that are needed for every
+    % `raw gnuplot' call
+    \newcommand*\GnuplotDefs{
+        % set number of samples
+        set samples 51;
+        %
+        % define beta distribution function
+        % (copied from <http://gnuplot.sourceforge.net/demo/prob.5.gnu>)
+        Binv(p,q)=exp(lgamma(p+q)-lgamma(p)-lgamma(q));
+        beta(x,p,q)=p<=0||q<=0?1/0:x<0||x>1?0.0:Binv(p,q)*x**(p-1.0)*(1.0-x)**(q-1.0);
+    }
+
+\usepackage{wrapfig}    %Wrapping text around figures
+
+
+% REFERENCES
+\usepackage{csquotes} 
+\usepackage[style=apa,backend=biber,doi=false,isbn=false,url=false,eprint=false]{biblatex}
+    \AtEveryBibitem{%
+      \clearfield{note}%
+    }
+\addbibresource{references.bib}
+\renewcommand*{\nameyeardelim}{\space}  % Author Year \cite{}
+
+% SOME BASIC LINGUISTICS PACKAGES
+% Phonology
+\usepackage{tipa}
+\usepackage{phonrule}
+\usepackage[shadedcells]{ot-tableau}
+
+% Syntax & Semantics
+\usepackage{semantic}
+
+\usepackage{linguex}
+\makeatletter
+\newif\if@repeated\@repeatedfalse
+\newcounter{savedExNo}
+\renewcommand{\NormalEx}{\ifExWarning 
+     \PackageWarning{linguex}{Check example numbering (screwed up?), 
+     check number of empty lines at end of examples.  
+     Detected}\fi\ExWarningtrue
+     \if@repeated
+        \Exformat[\ref{\tmp@ref}]
+        \setcounter{ExNo}{\value{savedExNo}}
+        \global\@repeatedfalse
+     \else
+     \if@noftnote\refstepcounter{ExNo}%
+        \Exformat[\ExLBr\Exarabic{ExNo}\ExRBr]%
+     \else
+         \refstepcounter{FnExNo}\Exformat[\FnExLBr\Exroman{FnExNo}\FnExRBr]%
+     \fi
+     \fi}
+\newcommand{\exr}[1]{%
+\@repeatedtrue
+\setcounter{savedExNo}{\value{ExNo}}
+\def\tmp@ref{#1}
+\ex.}
+\makeatother        % cross referencing existing example
+
+\usepackage[linguistics]{forest}
+    \forestset{
+      nicer nodes/.style={
+        for tree={
+          l =1cm,
+          l sep=0pt, 
+          s sep=0pt,
+          inner sep=0pt,
+          fit=band,
+        },
+      },
+      default preamble=nicer nodes,
+    }
+
+% USER-DEFINED COMMANDS
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother    % number -> roman numeral
+
+\newcommand{\alignright}{\hspace*{\fill}}
+\newcommand{\infer}{$\rightsquigarrow$ }
+\newcommand{\ninfer}{\( \cancel{\rightsquigarrow} \) }
+\newcommand{\sub}[1]{\textsubscript{#1}}
+\newcommand{\todo}[1]{{\color{magenta} #1}}
+\newcommand{\lreqn}[2]{\noindent\makebox[.965\linewidth]{$\displaystyle#1$\hfill(#2)}\vspace{0ex}}
+
+\newcommand{\interpfn}[1]{|[#1|]^{c, g, w}}
+
+\title{\LARGE Deriving evaluativity in \textit{even}-comparatives via presupposition accommodation\thanks{I am grateful to Christopher Baron, Patrick D. Elliott, Kai von Fintel, Peter Grishin, Martin Hackl, Roumi Pancheva, Nadine Theiler, and anonymous reviewers of WCCFL 39, CLS 57 and SuB 26 for helpful comments. Special thanks to Athulya Aravind, Danny Fox, and Roger Schwarzschild for extensive discussions and detailed feedback at different stages of this project. Parts of this work were presented at the LFRG at MIT and CLS57. All errors are, of course, mine and mine alone.}}
+%\subtitle{}
+\author{\large Agnes Bi}
+\date{\large \today}
+
+
+\begin{document}
+
+%%% Plotting normal distribution
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}
+
+%\setlength{\Extopsep}{0pt}   % remove extra spacing before and after \ex. sentences
+\setlength{\Exlabelsep}{0.6em}  % reduce spacing between \ex. label and \a. label
+\setlength{\SubExleftmargin}{1.6em}  % reduce spacing between \a. label and text
+
+%\onehalfspacing     % specify spacing
+
+% reduce spacing in align environments
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+\onehalfspacing
+%\singlespacing
+
+\maketitle
+
+%\vspace{-0.5cm}
+\section{Introduction}
+
+Discourse participants are constantly negotiating what they take to be in the common ground. From a Stalnakerian point of view, the presupposition $\varphi$ of an utterance \textit{S} can be accommodated when the addressee recognizes that the speaker intends $\varphi$ to be in the common ground and, if $\varphi$ does not contradict the addressee's beliefs, adjusts their own understanding of the common ground accordingly (\cite{stalnaker_common_2002}). It is a well-known and puzzling fact that some presuppositions are easier to accommodate than others. This paper focuses on how the presupposition of scalar particles such as \textit{even} is accommodated in comparative sentences, and how abductive reasoning comes into play in deriving their inferences.
+
+Sentences involving the scalar particle \textit{even} result in evaluative inferences as their default reading when combined with gradable predicates. By \textit{default reading}, I am assuming that the sentences are uttered more or less out of blue, or with minimal additional background information. As \Next shows, the nature of these inferences varies depending on where the focus is placed:
+
+\ex.\label{even-base} \a. Alex is even taller than [Blake]\textsubscript{F}.  % Blake is especially tall; Alex is taller yet.
+\alignright [ \infer Both Alex and Blake are \textbf{tall}]\footnote{This positive entailment, to the best of my knowledge, is first noted in \cite{greenberg_even_2015} example (10).} \label{even-base-objF}
+\b. [Alex]\textsubscript{F} is even taller than Blake. % Alex is especially short, hence you don't expect him to be taller than anyone. But he is taller than Blake.
+\alignright [\infer Both Alex and Blake are \textbf{short}]\footnote{Perhaps a better way to bring out this intuition is to move \textit{even} to the beginning of the sentence \textit{\underline{Even} [Alex]\sub{F} is taller than Blake} so that we don't reply on \textit{even} to back-associate. Cf. the comparable version of \ref{even-base-objF} \textit{Alex is taller than \underline{even} [Blake]\sub{F}}. Thanks to Aviv Schoenfeld for this suggestion at CLS poster session.} \label{even-base-subF}
+
+Positive adjectives such as \textit{tall} by themselves do not produce evaluative inferences in the comparatives. We cannot infer Alex's or Blake's height status from \Next alone:
+
+\ex. Alex is taller than Blake.
+
+Hence, the evaluative inference must have been triggered by the addition of \textit{even}. Although the focus sensitivity is a novel observation, positive inferences observed in \textit{even}-sentences with default pitch accent sentence-finally, such as \ref{even-base-objF},  have been noted in literature (\cite{greenberg_even_2015}, \cite{daniels_even_2020}) and taken as one of the main arguments to enrich the meaning of \textit{even} from its classic formulation (\cite{karttunen_conventional_1979}; \cite{rooth_theory_1992}; \cite{chierchia_logic_2013}; a.o.)
+
+\ex.\label{classicunlikelihood} \textbf{Classic (un)-likelihood analysis of \textit{even}} \\
+    $|[\textit{even}|]^{g, c} = \lambda C. \lambda p : \forall q \in C \, [q \neq p \rightarrow p <_{\text{likely}} q]. p$ \\
+    i.e., the prejacent \textit{p} is the least likely among its alternatives in the context C
+    
+to a more involved one by explicitly encoding some version of a positive condition in its semantics. %, an example of which is given below.
+%
+%\ex.\textbf{Revised Comparative (un)Likelihood (Daniels and Greenberg 2020)} \\
+%A proposition \textit{even p} is felicitous only if the following conditions hold:
+%\a. \textbf{Superlative Condition}: \textit{p} is $<_{\text{likely}}$ \textit{q }, for all \textit{q} in C, where C is the set of contextually restricted focus alternatives;
+%\b. \textbf{Positive Condition}: \textit{p} and \textit{q } are $>$ R\textsubscript{Std} for (un)likelihood, where R\textsubscript{Std} is the standard range, i.e., both \textit{p} and its alternatives \textit{q} are unlikely.
+This paper takes a pragmatic approach instead, and claims that the classic (un)likelihood meaning of \textit{even} is sufficient, and the evaluative inferences only arise as a default reading in the absence of more specific contexts. The remainder of the paper is organized as follows: in section 2, I give the relevant background and review the competing semantic analyses on the market. In section 3, I present the details of my proposal and illustrate why a pragmatic approach is potentially more appealing. Section 4 assesses the proposal by expanding the empirical domain and sketch out possible extensions. And section 5 concludes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Previous analyses}
+
+Positive inferences such as that of \ref{even-base-objF} has been noted and discussed quite extensively in literature.  A prominent line of research on this topic advocates for an enrichment of the semantics of \textit{even} (\cite{greenberg_even_2015}, 2018; \cite{daniels_even_2020}). 
+
+In her 2015 paper, Greenberg points out three novel empirical challenges for the classic (un)-likelihood view: (i) examples where \textit{even p} is felicitous despite \textit{p} not being less likely than \textit{q}; (ii) examples where \textit{p} asymmetrically entails \textit{q}, in which case the presupposition of \textit{even} is supposedly satisfied, yet \textit{even p} is still infelicitous; (iii) unexpected sensitivity to standards of comparison. I will leave aside the first two issues for now, and focus on the third in this paper. Greenberg observes that when \textit{even} associates with comparatives formed with relative adjectives, it gives rise to entailments of their positive forms:
+
+\ex. \a. The blue tool is (even) [stronger than the red tool]\sub{F}. \alignright (\cite{greenberg_even_2015}) \\
+\underline{Without \textit{even}}: No inference (... both can be weak) \\
+\underline{With \textit{even}}: Entailment \infer The blue/red tool is strong (\# ... both can be weak)
+\b. Bill is (even) [taller than John]\sub{F}. \\
+\underline{Without \textit{even}}: No inference (... both can be short) \\
+\underline{With \textit{even}}: Entailment \infer Bill/John is tall (\# ... both can be short)
+
+%Greenberg also observes felicity contrasts in the following minimal pairs:
+
+%\ex. \textit{(Context: plastic-<-aluminum-<-}\textbf{standard}\textit{-<-iron-<-steel-- $\rightarrow$ Physical strength)} \\
+%\textit{Client}: I need a strong tool. What about the red and blue tools over there?
+%\a. \textit{Seller(a)}: Well, the red one is made of iron and the blue one is (even) made of [steel]\sub{F}
+%\b. \textit{Seller(b)}: Well, the red one is made of plastic and the blue one is (??even) made of [aluminum]\sub{F}
+%\b. \textit{Seller(b)}: Well, the red one is made of plastic and the blue one is (??even) made of [steel]\sub{F}
+
+Greenberg takes these data to suggest that in addition to the comparison between the prejacent \textit{p} and its alternative \textit{q}, both \textit{p} and \textit{q} also need to have degrees that are at least as high as the \textbf{standard} on the contextually determined scale. Based on this insight, Greenberg and colleagues' work branch into two slightly different analyses, depending on whether the scale of likelihood is retained in the revised meaning of \textit{even}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Gradability-based account}
+
+Greenberg 2015, 2018 approach, building on an intuition in \cite{rullmann_what_2007}, proposes two major revisions to the classic (un)-likelihood analysis \ref{classicunlikelihood}: first, instead of imposing restrictions on likelihood, the presupposition of \textit{even} is stated on a contextually determined scale \textsc{g}; second, the standard of \textsc{g} is introduced as part of the presupposition so that the observed evaluative inferences can be straightforwardly captured:
+
+\ex.\label{gradable} \begin{singlespace}
+\textbf{Gradability-based analysis of \textit{even}} (Greenberg 2015, 2018)
+\begin{flalign*}
+    |[\textit{even}|]^{g, c} = & \lambda C. \lambda p. \lambda w: \forall q \in C \big[q \neq p \rightarrow & \\ 
+    & \forall w_1, w_2 [w_1Rw \land w_2Rw \land w_2 \in p \land w_1 \in [q \land \neg p]] \rightarrow & \\
+    & [\textit{max}(\lambda d_2.G(d_2)(x)(w_2))) > \textit{max}(\lambda d_1.G(d_1)(x)(w_1)) & \text{Superlative Condition (a)} \\ 
+    & \land \\
+    %\boxed{
+    & \mathcolorbox{gray!25}{\textit{max}(\lambda d_1.G(d_1)(x)(w_1)) \geqslant \textbf{Stand}_G }
+    %}
+    ] \big]. & \mathcolorbox{gray!25}{\text{Positive Condition (b)}} \\
+    & p(w) = 1 & \text{Assertation}
+\end{flalign*}
+where \textit{x} is a non-focused entity within the prejacent \textit{p}, C is the set of alternatives, and \textsc{g} is a contextually supplied gradable property.
+\end{singlespace}
+
+In prose, \textit{even} presupposes that with respect to an individual \textit{x} and a gradable property \textsc{g},the following two conditions hold: (a) \textit{x}’s maximal degree on the scale associated with \textsc{g} is higher in all accessible \textit{p} worlds than in all accessible \textit{q}-and-not-\textit{p} worlds, and (b) in all accessible \textit{q}-and-not-\textit{p} worlds, \textit{x}’s degree on \textsc{g} is at least as high as the standard of \textsc{g}.
+
+The revised meaning \Last can easily explain the contrasts between \Next[a] and \Next[b], which notably poses a problem for the classic analysis:
+
+\ex. \textit{Context: John is an accountant, working in a formal office environment.} \alignright (Greenberg 2017)
+\a. John wore a colorful T-shirt to work yesterday, and he even wore [a funny old hat]\sub{F}.
+\b. \#John wore his usual white shirt to work yesterday, and he even wore [a funny old hat]\sub{F}. 
+
+Presumably, John wearing a funny old hat is less likely than him wearing his usual shirt, which should have been sufficient to satisfy the presupposition of \textit{even} in the classic analysis, and \Last[b] is thus predicated to be felicitous, contrary to speakers' intuition. However, if we adopt the proposal in \ref{gradable}, assuming the relevant gradable property \textsc{g} is being unexpected, the alternative \textit{q} $=$ \textit{John wore his usual white shirt} does not surpass the threshold of what's considered unexpected. This violates the Positive Condition and leads to a presupposition failure.
+
+How this analysis deals with the original puzzle in \ref{even-base} is much less clear. Consider \ref{even-base-objF} first, repeated below:
+
+\exr{even-base-objF} Alex is even taller than [Blake]\textsubscript{F}.  % Blake is especially tall; Alex is taller yet.
+\alignright [ \infer Both Alex and Blake are \textbf{tall}]
+
+Following \cite{greenberg_revised_2018}, assume \textit{even} associates with the Degree Phrase \textit{-er than Blake}\footnote{I assume a phrasal comparison structure here for the ease of illustration. This is not crucial for Greenberg's analysis; phrasal comparison structure goes through in the same fashion.}, and the set of alternatives C is as in \Next:
+
+\ex. \begin{tabular}[t]{rl}
+    $C_{\text{\ref{even-base-objF}}}$ & $=$ \{ Alex is as tall as Blake, Alex is taller than Blake \}\\
+    & $=$ \{ $\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) \geq \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))$, \\
+    & $\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) > \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))$ \}
+\end{tabular}
+
+Suppose the gradable predicate \textsc{g} measures degrees to which $x$ is tall. Note that, as \cite{greenberg_revised_2018} mentions in footnote 19, the value of \textsc{g} does not have to be the gradable property the comparative is based on. This analysis leaves some flexibility to the interpretation of \textsc{g}, but also runs the risk of overgenerating. The scalar presupposition of the sentence \ref{even-base-objF} is then
+
+\ex. \textbf{Presupposition of \ref{even-base-objF} per \cite{greenberg_revised_2018}}\\ 
+    $\forall w_1, w_2 [w_1Rw \land w_2Rw \land w_2 \in [\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) > \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))]  \land w_1 \in [\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) = \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))]] \rightarrow$ \\
+    $[\textit{max}(\lambda d_3.\textsc{tall}(d_3)(\text{Alex})(w_2))) > \textit{max}(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})(w_1))$ \hspace*{\fill} Superlative Condition\\ 
+    $\land \, \textit{max}(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})(w_1)) \geqslant \text{Stand}_\textsc{tall} ] \big]$ \hspace*{\fill} Positive Condition
+
+Only when Blake's height is known or fixed in the context, the superlative condition is guaranteed to be trivially satisfied  -- Alex's degree of tallness in all accessible worlds where she is taller than Blake (\textit{p} worlds) is higher than in all worlds where she is exactly Blake's height (\textit{q-and-not-p} worlds). The positive condition further requires that Alex's degree of tallness in the worlds where she is the exactly same height as Blake to be at least as high as the standard for tallness. It follows that Blake is tall, and since Alex is taller than Blake, Alex is qualified as tall as well.
+
+The reasoning goes through roughly as expected, but the additional assumption of the height of Blake being fixed seems too restrictive. However, more pressing issues arise when we consider the case with focus on subject
+
+\exr{even-base-subF} [Alex]\textsubscript{F} is even taller than Blake. 
+\alignright [ \infer Both Alex and Blake are \textbf{short}]
+
+Assume \textit{even} associates with the subject Alex, and the set of alternatives $C$ is then
+
+\ex. $C_{\text{\ref{even-base-subF}}} =$ \{ \textsc{ALT(alex)} is taller than Blake, Alex is taller than Blake \}
+ 
+For the purpose of demonstration, let's assume $\{x | x \in \textsc{ALT(alex)}\}$ in this context is a singleton set containing only the individual Dominique. Suppose the gradable predicate \textsc{g} again measures degrees of tallness. The scalar presupposition of the sentence \ref{even-base-subF} is thus
+
+\ex. \textbf{Presupposition of \ref{even-base-subF} per \cite{greenberg_revised_2018} (attempt 1)} \\ 
+    $\forall w_1, w_2 [w_1Rw \land w_2Rw \land w_2 \in [\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) > \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))]  
+    \land 
+    w_1 \in [\max(\lambda d_3.\textsc{tall}(d_3)(\text{Dominique})) >  \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake})) \, \land$ \\  \hspace*{\fill} $\max(\lambda d_1.\textsc{tall}(d_1)(\text{Alex})) \leq \max(\lambda d_2.\textsc{tall}(d_2)(\text{Blake}))]] \rightarrow
+    $ \\
+    $[\textit{max}(\lambda d_2.\textsc{tall}(d_2)(\text{Blake})(w_2))) > \textit{max}(\lambda d_1.\textsc{tall}(d_1)(\text{Blake})(w_1))$ \\ 
+    $\land \, \textit{max}(\lambda d_1.\textsc{tall}(d_1)(\text{Blake})(w_1)) \geqslant \text{Stand}_{\textsc{tall}} ] \big]$
+    
+In other words, the first conjunct requires that Blake's degree of tallness in all accessible worlds where she is shorter than Alex (\textit{p} worlds) is higher than in all worlds where she is shorter than Dominique but taller than Alex (\textit{q-and-not-p} worlds). Assuming Alex's height is known and fixed, it is always false, which wrongly predicates the sentence to be infelicitous. In an attempt to resolve this issue, I will try reversing the scale, accommodating a $\textsc{g}'$ measuring degrees of \textbf{shortness}. Note it is unclear to me why this rescue strategy can be employed, and whether it is always available systematically.
+
+\ex. \textbf{Presupposition of \ref{even-base-subF} per \cite{greenberg_revised_2018} (attempt 2)} \\ 
+    $\forall w_1, w_2 [w_1Rw \land w_2Rw \land w_2 \in [\max(\lambda d_1.\textsc{short}(d_1)(\text{Alex})) > \max(\lambda d_2.\textsc{short}(d_2)(\text{Blake}))]  
+    \land 
+    w_1 \in [\max(\lambda d_3.\textsc{short}(d_3)(\text{Dominique})) >  \max(\lambda d_2.\textsc{short}(d_2)(\text{Blake})) \, \land$ \\  \hspace*{\fill} $\max(\lambda d_1.\textsc{short}(d_1)(\text{Alex})) \leq \max(\lambda d_2.\textsc{short}(d_2)(\text{Blake}))]] \rightarrow
+    $ \\
+    $[\textit{max}(\lambda d_2.\textsc{short}(d_2)(\text{Blake})(w_2))) > \textit{max}(\lambda d_1.\textsc{short}(d_1)(\text{Blake})(w_1))$ \\ 
+    $\land \, \textit{max}(\lambda d_1.\textsc{short}(d_1)(\text{Blake})(w_1)) \geqslant \text{Stand}_{\textsc{short}} ] \big]$
+
+The first conjunct now requires that Blake's degree of \textbf{shortness} in all accessible worlds where she is shorter than Alex (\textit{p} worlds) is higher than in all worlds where she is shorter than Dominique but taller than Alex (\textit{q-and-not-p} worlds), which, assuming Alex's height is constant across all possible worlds, is trivially met. The second conjunct requires that Blake's degree of shortness in the worlds where Alex is taller than her to surpass the standard for shortness. Crucially, the presupposition in \Last does not impose any condition on Alex's height status. We can only infer that Blake is short, but not that Alex is also short%\footnote{This is actually the judgment reported by reviewer 1 of WCCFL. All the native speakers ($\sim 10$) I have consulted reported the inference that both Alex and Blake are short for \ref{even-base-subF}, but there could very well be speaker variations.}
+. 
+
+The gradability-based account of \textit{even} not only is unsuccessful in capturing the complete inferences of comparative sentences with subject focus, but also imposes arbitrary restrictions on what needs to be known in the conversation background. The precise height of the focused element, Blake in \ref{even-base-objF} and Alex in \ref{even-base-subF}, needs to be known for the derivation to go through. In addition, since this approach leaves open how the relevant \textsc{g} is determined, it remains a mystery why the scale is reversed for the minimal pair \ref{even-base}.
+
+% - Barker 2009: positive form resolving uncertainty regarding one's height or uncertain regarding the salient standard of tallness
+
+% - contrastive topics determining different standards of comparison
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Adding positive condition to the classic analysis}
+
+\cite{daniels_even_2020} proposes to address the standard sensitivity of \textit{even} in comparatives when the focus is on the source of comparison (cases such as \ref{even-base-objF}) by hard-wiring a positive condition to the meaning of \textit{even}.
+
+\ex.\label{DG_Unlikelihood} \textbf{Revised Comparative (un)Likelihood (Daniels and Greenberg 2020)} \\
+A proposition \textit{even p} is felicitous only if the following conditions hold:
+\a. \textbf{Superlative Condition}: \textit{p} is $<_{\text{likely}}$ \textit{q }, for all \textit{q} in C, where C is the set of contextually restricted focus alternatives;
+\b. \textbf{Positive Condition}: \textit{p} and \textit{q } are $>$ R\textsubscript{Std} for (un)likelihood, where R\textsubscript{Std} is the standard range, i.e., both \textit{p} and its alternatives \textit{q} are unlikely.
+
+Since the original wording left it unclear, let's assume the weakest, existential version of the Positive Condition. In other words, there exists a salient alternative \textit{q} such that both the prejacent \textit{p} and \textit{q} are unlikely. 
+
+As the authors argue, in order to translate (un)likelihood to other scales, we need to crucially assume standards that are computed based on the distributions of degrees in the comparative class. By default, the distributional standard is located at or around the median value (\cite{solt_notes_2011}), and the degrees the individuals in the comparison class have cluster around it. Here is a summary of the assumptions adopted in the paper:
+
+\ex.\label{DG_assumptions} \textbf{\cite{daniels_even_2020}'s assumptions regarding scales of gradable predicates}
+\a. the standard range R\sub{Std} is an interval on the scale;
+\b. antonyms sit on the same scale, occupy the opposite sides outside of R\sub{Std};
+\b. having degrees within R\sub{Std} $>$\sub{likely} having degrees outside R\sub{Std};
+\b. having degrees within R\sub{Std} cannot be unlikely;
+\b.\label{averagevariations} variations within R\sub{Std} are allowed, i.e., it is possible to have a total ordering of the individuals fall within R\sub{Std}, but these differences are negligible, and thus not considered unlikely. 
+\z.
+
+The following figure demonstrate these assumptions on the scale of height:
+
+\vspace{0.25cm}
+\begin{singlespace}
+\resizebox{0.65\linewidth}{!}{
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\linespread{1}% <--- locally defined vertical line spacing in nodes
+%---
+%Straight Lines [id:da6075768649538124] 
+\draw    (121.42,190) -- (536,190) ;
+\draw [shift={(538,190)}, rotate = 539.8299999999999] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da45568459744739576] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (268,156.25) -- (268,208.25) ;
+%Straight Lines [id:da6210541845865379] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (372,156.25) -- (372,208.25) ;
+%Straight Lines [id:da9793154130726737] 
+\draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ]   (378,140) -- (526.42,140) ;
+\draw [shift={(528.42,140)}, rotate = 180.1] [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da5752384790946132] 
+\draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ]   (248,140) -- (124.42,140) ;
+\draw [shift={(122.42,140)}, rotate = 360.34000000000003] [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da3838445384619129] 
+\draw [decorate,decoration={brace,amplitude=5pt}, color={rgb, 255:red, 74; green, 144; blue, 226 } ] (268,140) -- (372,140);
+
+\draw (514,204) node [anchor=north west][inner sep=0.75pt]   [align=left] {Height};
+\draw (315,190) node [circle,fill,inner sep=1.5pt,label=below:\text{\footnotesize Median}] {};
+\draw (300,155) node [anchor=north west][inner sep=0.75pt]   [align=left] {R\sub{std}};
+\draw (268,80) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize, color={rgb, 255:red, 74; green, 144; blue, 226 }] [text width=8em, align=left] {falling in this range is NOT considered unlikely};
+\draw (153,155) node [anchor=north west][inner sep=0.75pt]   [align=left] {\textit{pos} \textsc{short}};
+\draw (432,155) node [anchor=north west][inner sep=0.75pt]   [align=left] {\textit{pos} \textsc{tall}};
+
+\draw (123,120) node [anchor=north west][inner sep=0.75pt]  [font=\small, color={rgb, 255:red, 65; green, 117; blue, 5 }] [align=left] {increasingly unlikely};
+\draw (393,120) node [anchor=north west][inner sep=0.75pt]  [font=\small, color={rgb, 255:red, 65; green, 117; blue, 5 }] [align=left] {increasingly unlikely};
+
+\end{tikzpicture}
+}
+\end{singlespace}
+\vspace{0.25cm}
+
+For \ref{even-base-objF}, the alternative set $C = \{\text{Alex is taller than Blake, Alex is taller than Cassie ...}\}$. The authors assume that the Superlative Condition inherited from the classic comparative (un)likelihood analysis guarantees the ordering Alex $>_{\text{tall}}$ Blake $>_{\text{tall}}$ Cassie. The additional Positive Condition requires both $p = $ \textit{Alex is taller than Blake} and $q =$ \textit{Alex is taller than Cassie} be unlikely. Since an individual can be tall, short, or neither, we have $3 \times 3 = 9$ possible cases regarding Alex's and Blake's height status, assuming they are in the same comparison class. These are examined separately and the eliminated ones crossed out.
+
+\vspace{0.5cm}
+\begin{singlespace}
+\begin{tabular}{cc|l}
+    Alex & Blake & \\ \hline
+    \textit{tall} & \textit{tall} & ? \\
+    \textit{tall} & \textit{average} & ? \\
+    \sout{\textit{tall}} & \sout{\textit{short}} & since it's not unlikely to be taller than a short individual, \textit{p} is not unlikely \\ \hline
+    \sout{{\color{gray}\textit{average}}} & \sout{{\color{gray}\textit{tall}}} & {\color{gray} contradicts Alex $>_{\text{tall}}$ Blake}\\
+    \sout{\textit{average}} & \sout{\textit{average}} & following assumption \Last[e], \textit{p} is not unlikely\\
+    \sout{\textit{average}} & \sout{\textit{short}} & since it's not unlikely to be taller than a short individual, \textit{p} is not unlikely \\ \hline
+    \sout{{\color{gray}\textit{short}}} & \sout{{\color{gray}\textit{tall}}} & {\color{gray} contradicts Alex $>_{\text{tall}}$ Blake} \\
+    \sout{{\color{gray}\textit{short}}} & \sout{{\color{gray}\textit{average}}} & {\color{gray} contradicts Alex $>_{\text{tall}}$ Blake} \\
+    \sout{\textit{short}} & \sout{\textit{short}} & since it's not unlikely to be taller than a short individual, \textit{p} is not unlikely
+\end{tabular} 
+\end{singlespace}
+\vspace{0.5cm}
+
+The authors point out that the remaining two cases need further examination: (i) If Alex is tall and Blake is neither tall or short, one could argue \textit{p} is not unlikely if we assume that, within a default distribution, the existence of individuals having degrees outside the standard range is expected. This is another, albeit sensible, assumption that needs independent support. (ii) If both Alex and Blake are tall, since variations are expected among the tall individuals, \textit{p} is not necessarily unlikely. Their proposal would then wrongly predicate a presupposition failure.
+
+Daniels and Greenberg's proposal is a reasonable and straightforward attempt to address the puzzle of standard sensitivity in \textit{even}-comparatives, but it appears to suffer from several issues. 
+
+First, the analysis takes for granted the likelihood ranking of the propositions \textit{p} and \textit{q} derives where the individuals sit relative to one another on the relevant scale. In fact, nothing in our current system guarantees this mapping. In theory, there can be many reasons as to why \textit{p} is less likely than \textit{q}. Consider \ref{even-base-objF} in a specific context.
+
+\ex. \label{sibling} \textit{Context: The speaker is talking about the three kids in the Smith family. So far, it has been established that Alex is taller than her twin Aaron and that Blake is their older sibling.} \\
+Alex is even taller than [Blake]\sub{F}. \alignright cf. \ref{even-base-objF}
+%This is only felicitous when the the height ordering between Aaron and Blake is unknown, or Blake is taller than Aaron
+
+In this scenario, $p =$ \textit{Alex is taller than Blake} is less likely than $q =$ \textit{Alex is taller than Aaron} simply because that it's more likely for a kid to be taller than someone of their own age than to be taller than someone older. Crucially, it doesn't have to the case that Blake is strictly taller than Aaron in actuality. Perhaps a more clear-cut example is as follows:
+
+\ex. \textit{Context: Stephanie was in 10k running race yesterday. She did better than a professional runner from Boston, and} \\ She even did better than a former marathon winner.
+
+Stephanie running faster than a marathon winner is less likely than her running faster than just any professional runner. However, it does not necessarily mean that the professional runner performed worse than the former marathon winner in this particular race. % Though \Last would be odd, even infelicitous, if it is already known that the professional runner did outrun the former marathon winner.
+A separate, well-defined machinery is needed to explain why and how likelihoods of propositions are translated to degrees on a scale.
+
+Second, %the analysis replies on a number of qualitative assumptions that are admittedly intuitive but quite imprecise. Merely stating something is "reasonable to assume" or "conceivable" is a little unsatisfying. The authors seemed to have specific types of distribution in mind for modeling gradable predicates, but this was not explicitly discussed. I will make this precise in my alternative proposal by adopting \cite{lassiter_context_2013}'s approach to modeling adjectives. Third, related to the previous point, 
+the derivation relies on the assumptions in \ref{DG_Unlikelihood}, which are satisfied by relative adjectives but not absolute adjectives (\cite{kennedy_vagueness_2007}, \cite{toledo_absolute_2011}, \cite{lassiter_context_2013}). Hence, the same reasoning does not apply to comparable sentences containing absolute adjectives. However, we observe the same inferences with both maximum and minimum standard adjectives, which would have to be explained either by proposing a separate mechanism or by revising the assumptions for \cite{daniels_even_2020}.
+
+\ex.\label{safe} \textit{Maximum standard absolute adjective}
+\a. District A is even safer than [District B]\sub{F}. \alignright [\infer Both districts are \textbf{safe}]
+\b. [District A]\sub{F} is even safer than District B. \alignright [\infer Both districts are \textbf{dangerous}]
+
+\ex.\label{dirty} \textit{Minimum standard absolute adjective}
+\a. The study is even dirtier than [the kitchen]\sub{F}. \alignright [\infer Both rooms are \textbf{dirty}]
+\b. [The study]\sub{F} is even dirtier than the kitchen. \alignright [\infer Both rooms are \textbf{clean}]
+
+%Leaves open what scale we're translating to from probability
+ 
+%Blocking: when there's a more salient alternative in the context
+
+%%% Initial attempt of mine:
+% For \ref{even-base}, at least in an out-of-blue context, there is not necessarily a contextually salient group of individuals that the interlocutors have in mind for the comparison class. Then to accommodate the Positive Condition, we have an abstract individual, say Doe, who is of "average height," i.e., whose height sits somewhere randomly within  R\sub{Std}. In \ref{even-base-objF}, let $p = $ Alex is taller than Blake, and $q = $ Alex is taller than Doe. Both \textit{p} and \textit{q} need to be unlikely, and \textit{p} is less likely than \textit{q}. If Alex's height is within R\sub{Std}, by assumption \ref{averagevariations}, Alex being taller than Doe does not count as unlikely; the Positive Condition on \textit{q} fails. If Alex's height falls below R\sub{Std}, in other words, if Alex is considered short, $q$ is then false \todo{(how does this help? is this case ruled out?)}. Finally, if Alex's height is above R\sub{Std} and it is less likely for Alex to be taller than Blake than taller than Doe, by subset principle, we derive that \textsc{Height}(Blake) $>$ \textsc{Height}(Doe). Moreover, we have the total ordering  \textsc{Height}(Alex) $>$ \textsc{Height}(Blake) $>$ \textsc{Height}(Doe), which is the desired inference. Similarly, in \ref{even-base-subF}, it follows that \textsc{Height}(Doe) $>$ \textsc{Height}(Alex) $>$ \textsc{Height}(Blake). 
+% In essence, this line of reasoning assumes that for any distribution that has a stable, or generally agreed-upon, average, such \textit{q} introducing the R\sub{Std} to the mix is always available, but it might not be the most salient alternative for the calculation of the Positive Condition \todo{("most salient" is so vague... how else to describe the difference between \ref{even-siblings} and \ref{even-base}?)}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Interim summary}
+
+As discussed above, the existing analyses fail to capture the complete inference patterns observed in \textit{even}-comparatives, and are unsatisfactory conceptually considering the stipulative assumptions. More importantly, semantic approaches cannot easily explain the systematic scale reversal effect triggered by the change in focus placement. 
+
+Broadly speaking, contingent on the mechanism assumed for setting the standard of a gradable predicate, semantic approaches seem to predict that, since the positive condition is hardwired, evaluative inferences always arise in comparative sentences with \textit{even}. This is not borne out empirically. In \ref{sibling}, the Smith kids can be tall, short or average height; we don't necessarily infer anything about their absolute height status from the sentence. 
+
+Moreover, similar evaluative inferences are seen in other scalar particles such as \textit{at least} and \textit{still}, and it would be ideal to have an uniform analysis, instead of enriching their semantics individually.
+
+\ex. \a. The study is at least cleaner than [the kitchen]\sub{F}. \alignright{[\infer Both rooms are dirty]}
+\b. Simon is taller still than Paige. \alignright{[\infer Both Simon and Paige are tall]}
+
+%Matters of what's specified in the information state!!!
+
+%The converse holds when the height of the individuals in the alternatives are known
+
+%Conditions on the information state to derive the evaluative inferences
+
+%\ex. \textit{Context: Roger was at the farmer's market last weekend, and he noticed}
+%\a. The apple was even more expensive than [the blueberries]\textsubscript{F}, and they are out of season. 
+%\b. The apple was even more expensive than [the lychees]\textsubscript{F}, and they are imported. 
+
+%The alternatives being considered are \textit{p} =  the apple is more expensive than \textit{x}, \textit{q} = the apple is more expensive then \textit{y}. \textit{p} is less likely than \textit{q} (1) if \textit{x} is out of season and \textit{y} is in season; or (2) if \textit{x} is imported and \textit{y} is local. For \Last[a] we get the inference that the apple is in-season and is very expensive for in-season fruits. For \Last[b] we infer that the apple is grown domestically and is very expensive for domestic fruits. Hence, regardless of the background for probability, it translates to the scale of the gradable predicate, and indicates where the target is within a contextually specified domain.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{A pragmatic approach}
+
+Given the aforementioned reasons, this paper takes a pragmatic approach instead, and argues that supplementing the classic (un)-likelihood analysis of \textit{even} with two general pragmatic principles can derive these inferences systematically.
+
+In what follows, assume the standard terminology in the Degree literature, where the subject of a comparative is referred to as the \textbf{target}, and the object of \textit{than}-clause in a phrasal comparative as the \textbf{standard}. Suppose \textit{even} always takes scope over matrix TP and associates with focus. I adopt the alternative semantics approach (\cite{rooth_association_1985}) to focus-sensitivity, and assume that a set of alternatives is computed in the context based on where the focus is placed.
+
+\subsection{Proposal}
+
+I will illustrate the details of my proposal using the minimal pair in \ref{even-base} again. According to the classic (un)likelihood analysis of \textit{even} \ref{classicunlikelihood}, both sentences assert that \textit{Alex is taller than Blake}, but with distinct presuppositions due to the difference in the alternative sets:
+
+\ex. Alternatives of \ref{even-base-objF} =  \{Alex is taller than $\pi$ | $\pi \in \textsc{ALT(Blake)}$\} \\
+Alternatives of \ref{even-base-subF} =  \{$\pi$ is taller than Blake | $\pi \in \textsc{ALT(Alex)}$\}
+
+%This is still quite far from the observed inferences for these sentences. The gradable predicate itself is not yet part of the equation, let alone its standard. I propose that listeners need to go through three additional steps to arrive at the evaluative inferences.
+
+The presupposition of \textit{even} mandates that the proposition \textit{Alex is taller than Blake} is the least likely among its alternatives. Either this presupposition is already entailed by the common ground, in which case no accommodation is needed and evaluative inference do not necessarily arise, as in \ref{sibling}; or, the addressee learns that this likelihood ranking is entailed by the speaker's intended common ground, and somewhat unexpectedly, commences an abductive reasoning trying to find the most likely justification for this ranking. Discourse participants are not satisfied with simply accommodating the likelihood presupposition on its own; they need to understand why the speaker would presuppose such differences in likelihood exist in the first place. I claim that in the absence of further context, absolute height status is the best and most salient explanation.
+
+Let's adopt a classic formulation of abduction
+
+\ex. \textbf{Abduction} (\cite{douven_abduction_2017}) \\ Given evidence $E$ and candidate explanations $H_1, ..., H_n$ of $E$, infer the truth of \textit{that} $H_i$ which best explains $E$.
+
+For \ref{even-base-objF}, \textit{E} is the fact the speaker's intended common ground entails that \textit{Alex is taller than Blake} is the least likely proposition among its alternatives \{Alex is taller than $\pi$\}. There can be many reasons as to why that would be the case. To name a few, let the candidate explanation $H_1$ be Blake is the oldest in the group of teenagers, $H_2$ Blake is a mythical giant, $H_3$ Blake is the only modern human compared to a group of mid-19th century people\footnote{According to Scientific American, over the last 150 years, the average height of people in industrialized nations has increased approximately 10 centimeters.}, so on and so forth. Among these explanations, $H_i$ Blake is the tallest within the contextually determined group is the one that presumes the least from context, which, I hypothesize, makes it the ``best" explanation of \textit{E}. Hence, via abduction, listeners infers $H_i$ to be true, i.e., Blake is the tallest within the set of the individuals considered in the computation of alternatives. We will refer to this set as the set of individuals under consideration, and it forms the comparison class for the interpretation of the relative adjective.
+
+In a broader context, the insight behind this reasoning is what I argue to be a general hypothesis of how presuppositions are accommodated.
+
+\ex. \textbf{Presupposition Accommodation Condition (PAC)}\\
+In cases where a presupposition is not entailed by the common ground, listeners can accommodate it only if its best explanation is already entailed or can be accommodated at the same time. % Q: best explanation of what?? Best explanation of the assertion
+
+For \textit{even}-comparatives such as \ref{even-base}, how the individuals are ordered on the scale of the gradable predicate is assumed by the listener to be \textit{a priori} justification for likelihood contrasts, and thus needs to be accommodated along with the likelihood rankings. The link between degrees and likelihoods is a natural one, considering the \textit{transitive} and \textit{antisymmetric} properties of ordering relations. \cite{cresswell_semantics_1976} gives a formal definition of degrees in set theory as points on a scale -- the scale is represented by a relation $>$, which is a set of ordered pairs; and the points on the scale is represented by the field of that relation $\mathfrak{F}(>)$, which is the set of all things that are related in one direction or another to something else. The field of a relation is also often referred to as its dimension (e.g., height, cost, crime rates, temperature and so forth).
+
+\ex. A \textsc{degree} (of comparison) is a pair $\big \langle u, > \big \rangle$, where $>$ is a relation and $u \in \mathfrak{F}(>)$. \\ \alignright (\cite{cresswell_semantics_1976}, p. 266)
+
+Cresswell further notes the relation $>$ is usually thought of as at least a partial ordering, from which we can conclude
+
+\ex. For a gradable predicate \textsc{g} with responding scale $>_\textsc{g}$, and $x, y, z \in \mathfrak{F}(>_\textsc{g})$,
+\a. Given $ x >_\textsc{g} y$. If $z >_\textsc{g} x$, then $z >_\textsc{g} y$;
+\b. Given $ y >_\textsc{g} x$. If $x >_\textsc{g} z$, then $y >_\textsc{g} z$.
+
+Translating this into \textbf{likelihood $\mathcal{L}$}
+
+\ex. For a gradable predicate \textsc{g} with responding scale $>_\textsc{g}$, given any $x, y, z \in \mathfrak{F}(>_\textsc{g})$, \\ \vspace{0.25cm}
+$
+\begin{cases}
+    \lreqn{x >_\textsc{g} y \to \mathcal{L}\big( z >_\textsc{g} x \big) \leq \mathcal{L}\big( z >_\textsc{g} y\big)}{a} \\
+    \lreqn{y >_\textsc{g} x \to \mathcal{L}\big( x >_\textsc{g} z \big) \leq \mathcal{L}\big( y >_\textsc{g} z\big)}{b}
+\end{cases}
+$
+
+% Comparable versions of these intuitions are valid for all positive adjectives regardless of their specific distribution on their respective scale
+Note \Last is a fundamental property of comparatives, independent of any specific behaviors of different types of adjectives. I suggest that the antecedents serve as the best explanation of their corresponding consequent, and given PAC, to accommodate the likelihood rankings, listeners need to accommodate the orderings on the relevant scale as well:
+
+\ex. \textbf{PAC Corollary: \textit{Likelihood-to-degree Mapping}} \\ 
+Given a gradable predicate \textsc{g} and its responding scale $>_\textsc{g}$, for $x, y, z \in \mathfrak{F}(>_\textsc{g})$, 
+\a. Accommodating $\mathcal{L}\big( z >_\textsc{g} x \big) < \mathcal{L}\big( z >_\textsc{g} y\big)$ requires that $x >_\textsc{g} y$ is either entailed in the common ground or can be accommodated;
+\b. Accommodating $\mathcal{L}\big( x >_\textsc{g} z \big) < \mathcal{L}\big( y >_\textsc{g} z\big)$ requires that $y >_\textsc{g} x$ is either entailed in the common ground or can be accommodated.
+
+An immediate predication of this account is that when a presupposition of likelihood ranking(s) is already entailed in the common ground, since there is no strict need for abductive reasoning any more, the evaluative inferences do not necessarily arise. This is borne out empirically, and explains what we observed for \ref{sibling}, repeated below, where discourse participants already have clear reasons to believe that Alex being taller than Blake is less likely.
+
+\exr{sibling} \textit{Context: The speaker is talking about the three kids in the Smith family. So far, it has been established that Alex is taller than her twin Aaron and that Blake is their older sibling.} \\
+Alex is even taller than [Blake]\sub{F}. \alignright cf. \ref{even-base-objF}
+
+Since common knowledge suggests twins are usually of similar heights and older siblings tend to be taller than the younger ones, the context above already entails that \textit{p} `Alex is taller than Blake' is less likely than \textit{q} `Alex is taller than Aaron.' The presupposition of \textit{even}, as stated in the classic (un)-likelihood analysis, is satisfied, and, crucially, no accommodation is required. Indeed, these kids can be tall, short or average height; we don't necessarily infer anything about their height status relative to the standard from the \textit{even}-sentence above.\footnote{It is interesting to note that there is a secondary, somewhat "hidden" implicature of \ref{sibling} -- Blake is taller than Aaron. This becomes clearer if we think of the (admittedly, very elaborate) scenario where the speaker is comparing two kids' heights at a time. The kids are asked to stand side-by-side in pairs. The speaker ﬁrst compared Alex with her twin Aaron and found out that Alex is taller than Aaron, and then compared Alex with her older sibling Blake, and concluded that \textit{Alex is even taller than Blake}. At this point, the relative height between Aaron and Blake is still unknown. Finally, the speaker compared these two and discovered that Aaron is actually a little bit taller than Blake as well. Given this context, some native English speakers are asked to evaluate the  \textit{even}-sentence uttered at two different time points: (i) before the total ordering is known; (ii) after it's been established in the conversation that Aaron is taller than Blake. It's reported that the sentence is felicitous at the former stage, but not at the latter. As argued before, there is no likelihood accommodation needed in this context, but listeners can, nonetheless, draw inferences predicted by the likelihood-to-degree mapping corollary. A rough derivation is as follows: the alternative set here is \{Alex is taller than $\pi$ | $\pi \in \{\text{Aaron, Blake}\}$\}; the relevant \textsc{g} is the property \textit{tall}, $x =$ Blake, $y =$ Aaron, $z =$ Alex. The best explanation for $\mathcal{L}$({\scriptsize Alex $>_\textsc{tall}$ Blake}) $<$ $\mathcal{L}$({\scriptsize Alex $>_\textsc{tall}$ Aaron}) is that Blake $>_\textsc{tall}$ Aaron, and, hence, we assume it to be true. Thanks to Danny Fox (p.c.) for pointing this out.}
+
+Going back to the original example where the \textit{even}-comparative is uttered out of blue, the likelihood-to-degree mapping leads to an interim conclusion of where the standard sits relative to other members of the comparison class on the relevant scale.  In \ref{even-base-objF} where, unlike \ref{sibling}, there are presumably more than two individuals entering the computation of alternatives, the PAC corollary guarantees that Blake is the tallest within the comparison class. 
+
+It is important to note that Blake being the tallest within the comparison class does not necessarily mean Blake is tall. Perhaps everyone else in the comparison class is exceptionally short, in which case we still do not know Blake's height status relative to the standard. To bridge this gap, let us assume that when an \textit{even}-comparative is uttered more or less out of blue, i.e., when the individuals under consideration are not specified in the discourse, the comparison class is representative of the contextually determined population. This proposal is formalized as follows:
+
+\ex. \textbf{Alternative-sampling Hypothesis (ASH)} \\ When the alternative set is not explicitly specified, assume that individuals included in the computation of alternatives form a representative sample of the contextually determined relevant population with respect to \textsc{g}.
+
+At its core, all \Last states is for interlocutors to assume normality unless told otherwise.
+
+Now we have all the necessary pieces to give a complete derivation of the positive inference in \ref{even-base-objF} when uttered in a context that does not already support the presupposition of \textit{even}. The classic (un)-likelihood analysis of \textit{even} presupposes that \textit{Alex is taller than Blake} is the least likely among its' alternatives \{Alex is taller than $\pi$ | $\pi \in \textsc{ALT(Blake)}$\}. First, the likelihood-to-degree mapping guarantees that \textit{Blake is the tallest person in the comparison class}. Second, since height of a population is normally distributed and, by Alternative-sampling Hypothesis, the comparison class reflects a representative sample, for Blake to be at least as tall as everyone else in that set, Blake is taller than population median. Hence, we get the inference that Blake is \textit{tall}. Third, since \textit{even} asserts that its prejacent is true, Alex is taller than Blake, which, in turn, indicates that Alex is tall as well. Notice the inference that \textit{Blake is tall} is of a different status as that of \textit{Alex is tall}, with the former derived entirely from presupposition and the latter additionally relying on the prejacent being \textsc{True}.
+
+The reasoning process is sketched in the figure below -- the shaded box is what we have from the semantics of \textit{even} alone, and justification for each step is noted above the arrow.
+
+\begin{figure}[h]
+  \vspace{0.25cm}
+  \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[node distance=6cm]
+    	\node (start) [startstop] {$p =$ \textit{Alex is taller than Blake} is less likely than its alternatives  \{Alex is taller than $\pi$\}};
+    	\node (step1) [process, right of=start] {Blake is taller than everyone else in the comparison class};
+    	\node (step2) [process, right of=step1] {Blake is tall};
+    	\node (step3) [process, right of=step2] {Alex is tall};
+    	\draw [arrow] (start) -- node[anchor=south] {PAC} (step1);
+    	\draw [arrow] (step1) -- node[anchor=south] {ASH}(step2);
+    	\draw [arrow] (step2) -- node[anchor=south] {$p = 1$}(step3);
+    \end{tikzpicture}
+     }
+     \end{center}
+     \caption{Pragmatic reasoning process for \ref{even-base-objF}}
+\end{figure}
+
+The reversed, negative, inference of \ref{even-base-subF} falls out straightforwardly from the same reasoning process. Let's assume that negative gradable predicates share the same fields as their positive counterparts, but with the opposite relations. Starting with the alternative set \{$\pi$ is taller than Blake | $\pi \in \textsc{ALT(Alex)}$\}, the classic (un)-likelihood analysis requires that \textit{p} `Alex is taller than Blake' is the least likely among its alternatives. The relevant \textsc{g} is again the property \textit{tall}, $x =$ Alex, $y =$ everyone else considered in the alternatives, and $z =$ Blake. By part (b) of the likelihood-to-degree mapping, to accommodate the said likelihood rankings, we accommodate at the same time that Alex is the shortest within the comparison class. By the Alternative-sampling Hypothesis, since the comparison class is a representative sample of a normal distribution, Alex is shorter than population median. Lastly, assuming the prejacent to be \textsc{True}, Alex, albeit short, is taller than Blake, so Blake must be short as well. 
+
+\begin{figure}[h]
+  \vspace{0.25cm}
+  \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[node distance=6cm]
+    	\node (start) [startstop] {$p =$ \textit{Alex is taller than Blake} is less likely than its alternatives \{$\pi$ is taller than Blake\} };
+    	\node (step1) [process, right of=start] {Alex is shorter than everyone else in the comparison class};
+    	\node (step2) [process, right of=step1] {Alex is short};
+    	\node (step3) [process, right of=step2] {Blake is short};
+    	\draw [arrow] (start) -- node[anchor=south] {PAC} (step1);
+    	\draw [arrow] (step1) -- node[anchor=south] {ASH}(step2);
+    	\draw [arrow] (step2) -- node[anchor=south] {$p = 1$}(step3);
+    \end{tikzpicture}
+    }
+  \end{center}
+  \caption{Pragmatic reasoning process for \ref{even-base-subF}}
+\end{figure}
+
+Notice an essential difference between the two derivations: for \ref{even-base-objF}, comprehenders come to conclusion about Blake's height status first, while for \ref{even-base-subF}, they do so about Alex's height status first. Therefore, this analysis makes the prediction that when we have reasons to reject the prejacent or when the prejacent is not automatically assumed to be true, for example in \ref{even-base}'s corresponding polar questions, we infer the height status of distinct individuals. This seems to be consistent with speakers' judgment:
+
+\ex. \a. Is Alex even taller than [Blake]\sub{F}? \alignright [\infer Blake is tall]
+\b. Is [Alex]\sub{F} even taller than Blake? \alignright [\infer Alex is short]
+
+% Study their projection patterns:
+% \ex. If Alex is even taller than [Blake]\sub{F}, Alex will be able to reach the top shelf.
+% - Blake need to be tall for the sentence to be felicitous, but we do not need to presuppose anything about Alex's height 
+% - p(Alex is taller than Blake | Blake’s height) is low
+% \ex. If [Alex]\sub{F} is even taller than Blake, Blake cannot go on the roller coaster ride.
+% - The presupposition that Alex is tall is projected, but we do not need to presuppose anything about Blake's height
+% - p(Alex is taller than Blake | Alex’s height) is low
+
+The intuition behind this proposal is a simple one. Given the pressure to reason in the absence of sufficient evidence (in these cases, without specified reasons for the likelihood orderings), comprehenders make the most out of the information they have, and commit to their best guess for the speaker's intended common ground.
+
+%\ex. \textbf{Maximize Utility} When certain aspects of the information state are left unspecified, make the best use of resources provided by context to reason through sentences.
+
+\subsection{Testing other types of adjectives}
+
+As noted before, the property that the likelihood-to-degree mapping relies on is fundamental to all partial ordering relations, and thus to all types of gradable predicates. The minimal pair in \ref{even-base} features a quintessential positive adjective, \textit{tall}. For completeness, I will walk through the derivations for a comparable set of examples containing the negative adjective \textit{cheap}, and show that the exact same reasoning applies.
+
+Consider the minimal pair in \Next uttered out of blue:
+
+\ex. \a. Pomelos are even cheaper than [pomegranates]\sub{F}. \alignright [\infer Both fruits are \textbf{cheap}]
+\b. [Pomelos]\sub{F} are even cheaper than pomegranates. \alignright [\infer Both fruits are \textbf{expensive}]
+
+
+For \Last[a], the presupposition of \textit{even} requires that the proposition \textit{pomelos are cheaper than pomegranates} is the least likely among its alternatives \{pomelos are cheaper than $\varphi$ | $\varphi \in \linebreak \textsc{ALT(pomegranates)} $\}. The relevant \textsc{g} is the property \textit{cheap}, $x = $ pomegranates, $y = \varphi$, $z = $ pomelos. By (a) of the likelihood-to-degree mapping corollary, to accommodate $\mathcal{L}\big( z >_\textsc{cheap} x \big) < \mathcal{L}\big( z >_\textsc{cheap} y\big)$, we need to accommodate $x >_\textsc{cheap} y$, i.e., pomegranates are cheaper than everything else under consideration. It follows that pomegranates are the cheapest within comparison class. By the Alternative-sampling Hypothesis, since the comparison class forms a representative sample, pomegranates having a price lower than sample median indicates it is also below population median. Pomegranates are cheap. Since the sentence asserts that the price of pomelos is lower than that of pomegranates, Pomelos are cheap as well.
+
+Similarly, for \Last[b], \textit{p} `pomelos are cheaper than pomegranates' is the least likely among its alternatives \{$\varphi$ are cheaper than pomegranates | $\varphi \in \textsc{ALT(pomelos)}$\}. Applying (b) of the likelihood-to-degree mapping, where the relevant \textsc{g} is the property \textit{cheap}, $x =$ pomelos, $y = \varphi$, and $z = $ pomegranates, we deduce that in order to accommodate $\mathcal{L}\big( x >_\textsc{cheap} z \big) < \mathcal{L}\big( y >_\textsc{cheap} z\big)$, accommodate at the same time that $y >_\textsc{cheap} x$, i.e., everything else under consideration is cheaper than pomelos. This means pomelos have a price higher than that of everything else in the comparison class. By the Alternative-sampling Hypothesis, pomelos have a price higher than not only the sample median but also the population median; pomelos are expensive. The sentence asserts that pomelos are cheaper than pomegranates. \mbox{Therefore, pomegranates must be expensive too.}
+
+We arrive at the correct conversational implicatures without needing to stipulate anything special for negative adjectives. The arguments go through as expected.
+
+Furthermore, recall in \ref{safe} and \ref{dirty}, repeated below, we observed that absolute adjectives such as \textit{safe} and \textit{dirty} show the exact same inference patterns in \textit{even}-comparatives, despite differing from relative adjectives such as \textit{tall} and \textit{cheap} in numerous ways (\cite{rotstein_total_2004}, \cite{kennedy_scale_2005}, \cite{kennedy_vagueness_2007}, a.o.). 
+
+\exr{safe} \a. District A is even safer than [District B]\sub{F}. \alignright [\infer Both districts are \textbf{safe}]
+\b. [District A]\sub{F} is even safer than District B. \alignright [\infer Both districts are \textbf{dangerous}]
+
+\exr{dirty} \a. The study is even dirtier than [the kitchen]\sub{F}. \alignright [\infer Both rooms are \textbf{dirty}]
+\b. [The study]\sub{F} is even dirtier than the kitchen. \alignright [\infer Both rooms are \textbf{clean}]
+
+Absolute adjectives, unlike relative adjectives, do not exhibit the same level of context sensitivity. What is considered \textit{safe} or \textit{dirty} varies little from context to context. While an individual can be \textit{tall} for regular people but \textit{short} for basketball players, a district, if it is almost free of crimes, will count as \textit{safe} regardless of the criteria, and can never be called \textit{dangerous}. As a result, absolute and relative adjectives show distinct patterns when combined with degree modifiers \ref{PM} or with an overt \textit{for}-phase specifying the comparison class \ref{for}, and with respect to entailments \ref{EP}.
+
+\ex.\label{PM} \textbf{Compatibility with proportional modifiers} 
+\a.[] District A is \textit{mostly} safe. \\ ??Alex is \textit{mostly} tall.
+
+\ex.\label{for} \textbf{Compatibility with \textit{for}-phrase}
+\a.[] ?District A is safe for a financial district\footnote{This sentence becomes felicitous under the assumption that financial districts are generally dangerous.}.  \\
+    Pomelos are cheap for imported fruits.
+
+\ex.\label{EP} \textbf{Entailment patterns}
+\a. District A is not safe. $\models$ District A is dangerous. \\
+    Alex is not tall. $\nvDash$ Alex is short.
+\b. The study is dirtier than the kitchen. $\models$ The study is dirty. \\
+    Pomelos are cheaper than pomegranates. $\nvDash$ Pomelos are cheap.
+
+\cite{kennedy_vagueness_2007} attributes the absolute/relative distinction to whether the scale used has a maximal or minimal endpoint. \cite{lassiter_context_2013} further generalizes this boundedness property and suggests that ``prototypical relative interpretations arise with priors with a relatively mild rate of change and little or no mass on the endpoints, while prototypical absolute interpretations arise with priors in which a significant portion of the prior mass falls close to an upper or lower bound" (p. 599).
+%%% Visualizing the priors proposed for relative vs. absolute adjectives by Lassiter and Goodman 2013
+% Q: The likelihood-degree correspondence describes the prior probability distribution of the gradable predicate, which is independent of contexts and presumably learned as part of meaning of the adjective. Unless the context calls for a non-identity transformation, we can assume the posterior distribution is the same??
+% Key: the interpretation of the adjectives relativized to statistical properties of a reference class 
+\begin{comment}
+\vspace{0.5cm}
+%Here begins the plot for relative adjectives
+\begin{tikzpicture}
+    \begin{axis}[
+      no markers, 
+      domain=0:6, 
+      samples=100,
+      ymin=0,
+      axis lines*=left, 
+      xlabel={\scriptsize Height},
+      ylabel={\scriptsize probability density},
+    % every axis y label/.style={at=(current axis.above origin),anchor=east},
+    % every axis x label/.style={at=(current axis.right of origin),anchor=west},
+      height=4cm, 
+      width=7.5cm,
+      xtick=\empty, 
+      ytick=\empty,
+      enlargelimits=false, 
+      clip=false, 
+      axis on top,
+      grid = major,
+    % hide y axis
+      ]
+        \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+    \end{axis}
+\end{tikzpicture}
+%Here ends the plot
+\hskip 8pt
+%Here begins the plot for absolute adjectives
+
+\begin{tikzpicture}
+        % define macros which are needed for the axis limits as well as for
+        % setting the domain of calculation
+        \pgfmathsetmacro{\xmin}{0}
+        \pgfmathsetmacro{\xmax}{1}
+    \begin{axis}[
+        xmin=\xmin,
+        xmax=\xmax,
+        no markers,
+        ymin=0,
+        axis lines*=left, 
+        xlabel={\scriptsize Degree of danger},
+        ylabel={\scriptsize probability density},
+    %   every axis y label/.style={at=(current axis.above origin),anchor=east},
+    %   every axis x label/.style={at=(current axis.right of origin),anchor=west},
+        height=4cm, 
+        width=7.5cm,
+        xtick=\empty, 
+        ytick=\empty,
+        enlargelimits=false, 
+        clip=false, 
+        axis on top,
+        grid = major,
+    %    hide y axis
+    ]
+        \addplot [very thick,cyan!50!black] gnuplot [raw gnuplot] {
+            % first call all the "common" definitions
+            \GnuplotDefs
+            % and then create the data tables
+            % in GnuPlot `x` key is identical to PGFPlots `domain` key
+            %
+            % "plot" beta function
+            plot [x=\xmin:\xmax] beta(x,1,10);
+        };
+    \end{axis}
+\end{tikzpicture}
+%Here ends the plot
+\end{comment}
+Regardless of the specific analysis, the general consensus is that the scales for relative adjectives and the ones for absolute adjectives show disparate characteristics. A set of assumptions satisfied by relative adjectives, such as the one listed in \ref{DG_assumptions} for \cite{daniels_even_2020}, does not necessarily apply to absolute adjectives. In the interest of theoretical parsimony, these differences should be irrelevant in our discussion here, since we observe the exact same inference pattern. My proposal, relying only on the minimal assumption of the scale being a partial ordering, is appealing in this regard.
+
+% Varying the characteristics of the alternative set under discussion: need to imagine a neutral context without prior expectation, i.e., uniform likelihood
+
+% \ex. \textit{Context: A card game such that a participant pick a card from the deck and compare it to the card on the table. The game is set up such that equally likely to get a card greater or smaller than the card on the table} \\
+% John's card is even grater than the card on the table.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Discussion: Motivating the principles}
+
+The Presupposition Accommodation Condition is indirectly supported by the study of \textit{explanations} in both philosophy and psychology (\cite{harman_inference_1965}, \cite{lombrozo_explanatory_2016}, \cite{wilkenfeld_inference_2015}). A growing body of work in experimental psychology has revealed that people have a strong, systematic inclination to favor explanations that are simple, broad, and consistent with their prior beliefs. \cite{wilkenfeld_inference_2015} further argues that "the \textit{process} of seeking, generating, or evaluating explanations itself puts one in a better epistemic position, even when the outcome of the process is not a true explanation" (p. 1060). The act of explaining itself can not only promote abstraction (\cite{williams_role_2010}) and comparisons between analogous cases (\cite{edwards_explanation_2019}), but also help with recognizing conflicting beliefs (\cite{chi_eliciting_1994}). Even though this conclusion is drawn from experiments where participants were explicitly asked to give verbal explanations, it is reasonable to assume that the implicit process of seeking and internalizing best explanations shares similar benefits. With regard to the inferences of \textit{even}-comparatives, contrasts on the relevant scale are a simple and probable explanation to why those particular likelihood rankings are assumed by the speaker.
+
+Contextualized in the broader pragmatics literature, the PAC can be considered a mechanism giving rise to one type of \textit{bridging} inferences\footnote{Thanks to SuB reviewer \#1 for the suggestion.}, namely what \cite{clark_bridging_1975} categorizes as \textit{reasons, causes, consequences, and concurrences}. Clark defines \textit{bridging} in terms of when a listener cannot find an antecedent "directly in memory," they construct the intended antecedent from what they already know, with the assumption that the speaker abides by the Given-New Contract:
+
+\ex. \textbf{Given-New Contract} (\cite{clark_bridging_1975}, p. 170) \\
+The speaker agrees to try to construct the Given and New information of each utterance in context
+\a. so that the listener is able to compute from memory the unique Antecedent that was intended for the Given information, and
+\b. so that he will not already have the New information attached to the Antecedent.
+
+Clark goes on to suggest that the bridge built should be the shortest possible that is consistent with the Given-New Contract. In other words, "the listener takes as the intended implicature the one that requires the fewest assumptions, yet whose assumptions are all plausible given the listener's knowledge of the speaker, the situation, and facts about the world" (p. 173). For example,
+
+\ex. I walked into the room. The chandeliers sparkled brightly. \alignright [\infer The room had chandeliers]\\
+\alignright (\cite{clark_bridging_1975}, p.171)
+
+Let's refer to the presupposition triggered by the definite description "the chandeliers," i.e., \textit{there existed some chandeliers}, the antecedent of the second sentence. The search for the antecedent was not successful initially, hence the listener filled in the gap by assuming that some chandeliers must be present in the room. In the case of \textit{even}-comparatives, bridging means finding the simplest explanation for the likelihood presupposition. The listener uses the background knowledge about the key properties of partial orderings to bridge from the presupposed likelihood ranking to what they take to be the intended antecedent -- differences on the relevant scale.
+
+% ++ Assuming the presuppositions as anaphors theory of Van der Sandt 1992, Piwek & Krahmer 2000
+
+%%% Proviso Problem??? How could this be related?
+
+Turing to the Alternative-sampling Hypothesis, there have been many proposals in the \textit{focus} literature that assume focus-sensitive particles operate on a restricted set of alternatives\footnote{I would like to thank SuB reviewer \#1 for pointing me to this body of work.}, i.e., a subset of the logical space that is considered "reasonable, or entertainable, at the current point in the discourse" (\cite{krifka_alternatives_2000}, p. 405). \cite{krifka_alternatives_2000} proposes that the presupposition of an aspectual particle such as \textit{already} or \textit{still} imposes a restriction on the set of alternatives to the prejacent -- specifically, the alternatives must be ordered and the prejacent must be a maximal or minimal element. Roughly speaking, \textit{already} presupposes that the valid alternatives are ranked lower than the prejacent on the relevant ordering, while \textit{still} presupposes that the alternatives are ranked higher. In other words, all three sentences in \Next assert that \textit{Lydia is three months old}, but with different "valid" alternatives:
+
+\ex. \ag. Lydia ist [drei]\sub{F} monate alt. \\
+Lydia is three months old \\
+\underline{Alt} $=$ \{\textit{Lydia is \underline{one} month old}, \textit{Lydia is \underline{two} months old}, \textit{Lydia is \underline{three} months old}, \textit{Lydia is \underline{four} months old}, \textit{Lydia is \underline{five} months old}, ...\}\\
+\bg. Lydia ist \textbf{schon} [drei]\sub{F} Monate alt. \\
+Lydia is \textbf{already} three months old  \\
+\underline{Alt} $=$ \{\textit{Lydia is \underline{one} month old}, \textit{Lydia is \underline{two} months old}, \textit{Lydia is \underline{three} months old}\} \\
+\bg. Lydia ist \textbf{noch} [drei]\sub{F} Monate alt. \\
+Lydia is \textbf{still} three months old \\
+`Lydia is only three months old.' \\
+\underline{Alt} $=$ \{\textit{Lydia is \underline{three} months old}, \textit{Lydia is \underline{four} months old}, \textit{Lydia is \underline{five} months old}, ...\} \\
+\alignright (\cite{krifka_alternatives_2000}, p. 405)
+
+\cite{beaver_sense_2008} had the similar idea when accounting for mirative function of \textit{only}. \textit{Only}-sentences often carry a sense of unexpectedness or surprise:
+
+\ex. London police expected a turnout of 100,000 but \textbf{only} 15,000 showed up. \\ \alignright (\cite{beaver_sense_2008}, p. 252, \textit{web example})
+
+The authors argue that hearer's expectation of something stronger than the prejacent being true is an essential part of the meaning of \textit{only}, and they capture this by presupposing the only alternatives "left open" are the ones that are at least as strong as the prejacent. As a result, accommodation, if necessary, involves removing invalid alternatives. 
+
+Both \cite{krifka_alternatives_2000} and \cite{beaver_sense_2008} assume a general concept of \textit{alternatives under consideration} when analyzing two distinct set of data. The Alternative-sampling Hypothesis proposed in this paper is in the same spirit.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion and implications}
+
+I have proposed two general cooperative principles governing how rational agents reason about language, which together explain the evaluative inferences that arise in comparative sentences with \textit{even}. This analysis accounts for the optionality of the evaluative inferences, with context \ref{sibling} versus without \ref{even-base-objF}, and straightforwardly derives the puzzling scale reversal in \ref{even-base} with minimal additional assumptions. In what remains, I will explore how this approach might shed some light on the analyses of concessive \textit{at least} and Mandarin scalar particle \textit{h\'{a}i}.
+
+\subsection{Concessive \textit{at least}} 
+
+It has been noted that \textit{even} under negation invokes a scale reversal in inferences (\cite{karttunen_conventional_1979}), which is indeed what we observe in the comparative sentences below:
+
+\ex. \a. Kimberly is even taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{tall}] 
+\b. Kimberly is \underline{not} even taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{short}] \label{not-even-objF}
+
+\ex. \a. [Kimberly]\sub{F} is even taller than Simona. \alignright [\infer Both are \textbf{short}] 
+\b. [Kimberly]\sub{F} is \underline{not} even taller than Simona. \alignright [\infer Both are \textbf{tall}] \label{not-even-subF}
+
+Under the NPI theory of \textit{even} (\cite{rooth_association_1985}, \cite{rullmann_even_1997}, \cite{giannakidou_landscape_2007})\footnote{NPIs (negative polarity items) are lexical items that are only licensed in negative, downward entailing, or nonveridical environments. I believe we will arrive at the same result following scope theory of \textit{even}, and hence, at least for the time being, I will remain neutral in this debate.}, the scalar particle \textit{even} is lexically ambiguous between an `ordinary' meaning and a NPI meaning licensed in the scope of a downward-entailing operator. The classic (un)-likelihood analysis \ref{classicunlikelihood} states `ordinary' \textit{even} presupposes that its prejacent is the least likely among its alternatives, and since NPI \textit{even} is associated with the opposite side of the scale to `ordinary' \textit{even}, we have
+
+\ex. \label{NPI-even} $|[\textit{even}\sub{\textsc{npi}}|]^{g, c} = \lambda C. \lambda p : \forall q \in C \, [q \neq p \rightarrow q <_{\text{likely}} p]. p$ \\ i.e., the prejacent \textit{p} is the \textbf{most} likely among its alternatives in the context C
+
+The evaluative inferences in \ref{not-even-objF} and \ref{not-even-subF} can be straightforwardly derived following the analysis proposed in the last section. Let us assume the LF below for both sentences,
+
+\ex. \begin{forest}
+    [TP$_2$ 
+        [\textit{not}]
+        [ 
+            [\textit{even}\sub{\textsc{npi}}]
+            [TP$_1$, name=target[\textit{\footnotesize Kimberly is taller than Simona}, roof]]  
+        ]   
+    ]
+\end{forest}
+
+but importantly, difference in focus placement triggers distinct alternative sets.
+
+For \ref{not-even-objF}, the meaning of NPI \textit{even} in \ref{NPI-even} presupposes that TP$_1$ \textit{Kimberly is taller than Simona} is the most likely among its alternatives \{Kimberly is taller than $\pi$ | $\pi \in \textsc{ALT(Simona)}$\}. Because negation is a presupposition `hole’ which allows the presuppositions of its complement to pass through unchanged (\cite{horn_presuppositional_1969}), TP$_2$ carries the same presupposition. Note the relevant \textsc{g} is the property \textit{tall}, $x =$ everyone else considered in the alternatives, $y = $ Simona, and $z =$ Kimberly. By part (a) of the likelihood-to-degree mapping, to accommodate the said likelihood rankings, we accommodate at the same time that everyone else is taller than Simona, i.e., Simona is the shortest within the comparison class. By the Alternative-sampling Hypothesis, since the comparison class is a representative sample of a normal distribution, Simona is shorter than population median. Finally, assuming the proposition \textit{Kimberly is not even taller than Simona} is \textsc{true}, Kimberly is not taller than Simona, so Kimberly must be short as well. The exact same reasoning applies to \ref{not-even-subF} except now the alternative set is \{$\pi$ is taller than Simona | $\pi \in \textsc{ALT(Kimberly)}$\}, and part (b) of the likelihood-to-degree mapping becomes relevant.
+
+% AT LEAST? NOT EVEN!
+% NEUTRAL CONTEXT: cat-sitting: cat weights and how much they are fed
+% TRY: analyzing comparatives in terms of negation; start with a simple analysis and see how far it goes
+
+\cite{rullmann_more_2009} notes a connection between NPI \textit{even} and \textit{at least}. First, NPI \textit{even} and \textit{at least} can often be used almost interchangeably:
+
+\ex. If you answer \textbf{at least} / \textbf{even} one question correctly, you'll pass. \\ \alignright (\cite{rullmann_more_2009}, p. 12)
+
+Second, some crosslinguistic evidence appears to suggest that \textit{at least} and \textit{even} are related:
+
+\ex. \a. \begin{tabular}[t]{llp{1cm}ll}
+\multicolumn{2}{c}{Dutch} & & \multicolumn{2}{c}{Japanese} \\\hline
+\textit{zelfs} & \textit{maar} & & \textit{-dake} & \textit{-demo}\\
+even & only & & only & even\\
+\multicolumn{2}{c}{$=$ NPI `even'} & & \multicolumn{2}{c}{$=$ `at least'}
+\end{tabular}
+\alignright (\cite{rullmann_more_2009}, p. 17)
+
+Although there are subtle differences in meaning between NPI \textit{even} sentences and their \textit{at least} counterparts, a natural question to ask is whether similar inference patterns are observed in comparative sentences with \textit{at least}. 
+
+\ex. \label{at-least} \a. Kimberly is at least taller than [Simona]\sub{F}. \alignright [\infer Both are \textbf{short}] \label{neg-atleast} 
+\b. [Kimberly]\sub{F}, at least, is taller then Simona. \alignright [??\infer Both are \textbf{tall}] \label{pos-atleast} 
+% Can "at least" back associate?
+
+%\ex. \a. ??John is not at least taller than \textsc{Bill}.
+%\b. \textsc{John}, at least, is not taller than Bill. \alignright \textsc{even} >> $\neg$ ?
+
+% not at least = not <not \textit{even}> in competition with \textit{even}?
+
+Unfortunately, the intuition is not very clear here. The epistemic reading of \textit{at least}, which signals the speaker is uncertain about the exact height of Kimberly in \Next[a] or the exact height of Simona in \Next[b], is so conspicuous that it is difficult to access the intended concessive reading without a specific context. This significant confound aside, a few native speakers did report the judgment above. It would be interesting to investigate why the judgment for \Last[a] is considerably clearer than that for \Last[b], and whether the same analysis can be extended to account for these inferences. 
+
+\subsection{Mandarin scalar particle \textit{h\'{a}i}} 
+
+%The focus particle \textit{hai} seems to take on different meanings, loosely translated to English \textit{even}, \textit{still}, or \textit{at least}, depending on the context. 
+
+The Mandarin scalar particle \textit{h\'{a}i} is similar to Greek \textit{esto} in that both are sometimes translated as `even' and sometimes as `at least' (\cite{giannakidou_landscape_2007}). Comparable type of reversed evaluative inferences to that of \ref{even-base-subF} versus \ref{even-base-objF} is expressed by the addition of, what is argued by \cite{paul_shi_2008} to be, a cleft construction \textit{sh\`{i} ... de} instead of change in pitch accent as in English:
+
+\ex. \ag. Ji\'{e}y\'{u} b\v{\i} \={A}nq\'{i} h\'{a}i g\={a}o. \\
+		J. compared-to A. \textsc{hai} tall \\
+		`Jieyu is even taller than [Anqi]\sub{F}.' \alignright [\infer Both Jieyu and Anqi are \textbf{tall}] \label{hai}
+\bg. Ji\'{e}y\'{u} b\v{\i} \={A}nq\'{i} h\'{a}i sh\`{i} g\={a}o de. \\
+		J. compared-to A. \textsc{hai} \textsc{cop} tall \textsc{de} \\
+		`[Jieyu]\sub{F} is even taller than Anqi' \alignright
+		[\infer Both Jieyu and Anqi are \textbf{short}] \label{haishide}
+
+I suspect what is happening here is that the cleft construction changes the focus structure of the sentence. As a result, a different set of alternatives is triggered, and enters the calculation of the presupposition of \textit{h\'{a}i}. As discussed in depth in \cite{lee_topic_2008}, languages differ in the overt cues utilized to cue focus, which can be via morphology, syntactic movement, and/or prosody. I will leave the concrete analysis of the Mandarin case for future research.
+
+In conclusion, even though accounting for evaluative inferences in \textit{even}-comparatives seems straightforward and is sometimes taken for granted, there are in fact general pragmatic principles at work, and it showcases how discourse participants make the best use of resources provided by context when certain aspects of the information state are left unspecified.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% IS THIS RELEVANT??
+\begin{comment}
+    Moreover, the evaluative inference goes away if sufficient context is provided. For \Next, Jieyu and Anqi can be tall, short, or average height.
+
+    \ex. \textit{Context: Jieyu and Anqi are applying to be in their high school gymnastic team. They are evaluated based on three criteria: height, strength, and team ethic. After the try-out, the coach commented:} 
+    \ag.[] (l\`{u}n g\`{e}zi,) Ji\'{e}y\'{u} b\v{\i} \={A}nq\'{i} h\'{a}i sh\`{i} g\={a}o de. \\
+    talking.about height J. compared-to A. \textsc{hai} \textsc{cop} tall \textsc{de} \\
+    $\approx$ `Well, Jieyu is taller than Anqi.'\footnote{Since in Mandarin, \textit{g\={a}o} can be used to describe team ethic as well, the bracket part, roughly translated to `with respect to height,' is to disambiguate but not strictly necessary.} \\\
+    \underline{Possible inference \#1}: Jieyu came short of Anqi in the other two aspects. \\
+    \underline{Possible inference \#2}: Jieyu and Anqi did equally well in the other two aspects. The coach can only decide based on height. \\
+    (i.e., Jieyu is not better than Anqi in other ways, but at least she is taller than him.) 
+    
+    % \ex. If Alex is even TALLER than Blake, this world is truly unfair.
+\end{comment}	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Polarity sensitivity
+\begin{comment}
+    Testing whether \textit{hai} is polarity sensitive? With negation in matrix clause, or more generally, hai in downward entailing environment
+    
+    \ex. \ag. Zhangsan bi Lisi hai shi bu-gao de. \\
+        Z. compared-to L. \textsc{hai} \textsc{cop} \textsc{neg}-tall   \textsc{de} \\
+        `Compared to Lisi, Zhangsan is not considered tall.' \\
+        \underline{Inference}: Both Zhangsan and Lisi are tall.
+        \bg. ?Zhangsan bi Lisi hai shi ai de. \\
+    Z. compared-to L. \textsc{hai} \textsc{cop} short   \textsc{de} \\
+    {}
+    
+    \ex. \ag. Zhangsan bi Lisi hai ai. \\
+        Z. compared-to L. \textsc{hai} short \\
+        `Zhangsan is even shorter than Lisi.’ \\
+        \underline{Inference}: Both Zhangsan and Lisi are short.
+        \bg. ??Zhangsan bi Lisi hai bu-gao. \\
+        Z. compared-to L. \textsc{hai} \textsc{neg}-tall \\
+        {}
+    
+    % NOTE: ignore temporal continuation property of \textit{hai} for now
+\end{comment}
+
+%%% Test for topic in each sentence (difference in information structure)
+\begin{comment}
+    \ex. \ag. shui bi Lisi hai gao? \\
+    who compared-to L. \textsc{hai} tall\\
+    'who is even taller than Lisi?'  \alignright [\infer Zhangsan is tall.]
+    \bg. \% Zhangsan bi shui hai gao? \\
+    Z. compared-to who \textsc{hai} tall\\
+    \underline{Intended}: 'Who is Zhangsan even taller than?'\footnote{The Mandarin sentence is felicitous under an echo question reading}.
+    
+    \ex. \ag. \% shui bi Lisi, hai shi gao de? \\
+    who compared-to L. \textsc{hai} \textsc{cop} tall \textsc{de}\\
+    \underline{Intended}: `Who is at least taller than Lisi?'
+    \bg. Zhangsan bi shui, hai shi gao de? \\
+    Z. compared-to who \textsc{hai} \textsc{cop} tall \textsc{de}\\
+    `Who is Zhangsan at least taller than?' \alignright [\infer Zhangsan is short.]
+    
+    By this straightforward question-answer pair, we can more or less safely assume that Lisi is the topic (old information) and Zhangsan is the focus in \ref{main-hai}, while Zhangsan is the topic and Lisi is the focus in \ref{main-haishide}. It follows that the alternative set triggered by \ref{main-hai} is $\{x: x \text{ is taller than Lisi}\}$, and the alternative set triggered by \ref{main-haishide} is $\{x: \text{Zhangsan is taller than } x\}$ BIG ISSUE SINCE THIS IS THE OPPOSITE OF WHAT WE WOULD NEED?
+\end{comment}
+
+%%% Test projection patterns
+\begin{comment}
+    \setlength{\SubExleftmargin}{2.4em}    
+    \ex. \ag. ruguo Zhangsan bi Lisi hai gao, ta yinggai neng jin lanqiudui \\
+		if Z. compared-to L. \textsc{hai} tall, he should able join basketball-team \\
+		`If Zhangsan is even taller than Lisi, he should be able to join the basketball team.' \\
+		\underline{Inference}: Lisi is tall by conventional(?) standard.
+	\bg. ?ruguo Zhangsan bi Lisi, hai shi gao de, ta keyi shi-shi jiaru lanqiudui \\
+		if Z. compared-to L. \textsc{hai} \textsc{cop} tall \textsc{de} he could try join basketball-team\\
+		`If Zhangsan is at least taller than Lisi, he could try joining basketball team'\\
+		\underline{Inference}: Lisi is short by conventional(?) standard.
+    \bg. ?jishi Zhangsan bi Lisi, hai shi gao de, ta ye bu manzu lanqiudui de yaoqiu \\
+		if Z. compared-to L. \textsc{hai} \textsc{cop} tall \textsc{de} he still(?) join not-\textsc{PERF} basketball-team\\
+		`Even though Zhangsan is taller than Lisi, he still doesn't meet the requirement'
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\printbibliography
+
+\end{document}

@@ -1,0 +1,17 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/.texpadtmp/GP1.blg'
+[42] biber-darwin:315> INFO - === Wed Oct  6, 2021, 01:12:13
+[67] Biber.pm:371> INFO - Reading '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/.texpadtmp/GP1.bcf'
+[184] Biber.pm:889> INFO - Found 32 citekeys in bib section 0
+[199] Biber.pm:4093> INFO - Processing section 0
+[209] Biber.pm:4254> INFO - Looking for bibtex format file '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/references.bib' for section 0
+[244] bibtex.pm:1523> INFO - LaTeX decoding ...
+[1168] bibtex.pm:1340> INFO - Found BibTeX data source '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/references.bib'
+[1203] Utils.pm:193> WARN - Duplicate entry key: 'beaver_sense_2008' in file '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/references.bib', skipping ...
+[1426] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1426] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1426] Biber.pm:3921> INFO - Sorting list 'apa/global//global/global' of type 'entry' with template 'apa' and locale 'en-US'
+[1426] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[1463] bbl.pm:636> INFO - Writing '/Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/.texpadtmp/GP1.bbl' with encoding 'UTF-8'
+[1489] bbl.pm:739> INFO - Output to /Users/agnesbi/Desktop/2021_GeneralsPaper/Presupposition-Accommodation/.texpadtmp/GP1.bbl
+[1489] Biber.pm:110> INFO - WARNINGS: 1

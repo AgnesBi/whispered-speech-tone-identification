@@ -1,0 +1,510 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{apa/global//global/global}
+    \entry{chierchia_logic_2013}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=36f119f7eb58f15c6421bda15adde193}{%
+           family={Chierchia},
+           familyi={C\bibinitperiod},
+           given={Gennaro},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{publisher}{1}{%
+        {OUP Oxford}%
+      }
+      \strng{namehash}{36f119f7eb58f15c6421bda15adde193}
+      \strng{fullhash}{36f119f7eb58f15c6421bda15adde193}
+      \strng{bibnamehash}{36f119f7eb58f15c6421bda15adde193}
+      \strng{authorbibnamehash}{36f119f7eb58f15c6421bda15adde193}
+      \strng{authornamehash}{36f119f7eb58f15c6421bda15adde193}
+      \strng{authorfullhash}{36f119f7eb58f15c6421bda15adde193}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{This book investigates the relation between language and logic. Gennaro Chierchia looks at the way syntactic and inferential processes interact in determining polarity sensitive and free choice phenomena. He analyses these as a form of grammaticized scalar implicature and seeks to identify the common core of the polarity system by examining many of its manifestations as well as the choices that determine its diversity. To do so he reassesses the relations between syntax, semantics, and pragmatics and in the process makes startling insights into the relation of syntax to logic. Rudolf Carnap's classic, The Logical Syntax of Language, defines syntax as a lexicon and a set of formation rules and logic as a set of inference rules. Modern generative linguistics maintains a similar modular approach: a combinatorial apparatus is said to generate structures over which semantic and pragmatic relations, such as presupposition and implicature, are defined. This book argues by contrast that many structures typically perceived as syntactically deviant owe their status to their logical properties, in other words to whether they are contradictory or analytically true in specific ways. This alters the Carnapian view. The characterization of grammatical structure requires a more direct role of logical inferences: the functional lexicon of grammar comes, Professor Chierchia shows, with a set of inference rules that crucially and directly determine grammaticality patterns. Logic in Grammar presents the results of the author's decade-long work on pragmatics and scalar implicatures and extends his long-term project on how humans reason and categorize the world. It is a book that will interest linguists, philosophers, and cognitive scientists alike.}
+      \field{isbn}{978-0-19-969797-7}
+      \field{month}{7}
+      \field{shorttitle}{Logic in {Grammar}}
+      \field{title}{Logic in {Grammar}: {Polarity}, {Free} {Choice}, and {Intervention}}
+      \field{year}{2013}
+    \endentry
+    \entry{daniels_even_2020}{misc}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=0a2dac00a51926e8d4de8145ff0e5f39}{%
+           family={Daniels},
+           familyi={D\bibinitperiod},
+           given={Micky},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e76e1cbc2e2b959655a28f6b633d6216}{%
+           family={Greenberg},
+           familyi={G\bibinitperiod},
+           given={Yael},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{b469e0434d7cefe339868ee70eeff8d0}
+      \strng{fullhash}{b469e0434d7cefe339868ee70eeff8d0}
+      \strng{bibnamehash}{b469e0434d7cefe339868ee70eeff8d0}
+      \strng{authorbibnamehash}{b469e0434d7cefe339868ee70eeff8d0}
+      \strng{authornamehash}{b469e0434d7cefe339868ee70eeff8d0}
+      \strng{authorfullhash}{b469e0434d7cefe339868ee70eeff8d0}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In this talk we examine the extent to which one of the observed challenges to the popular comparative likelihood (CL) approach to even p (‘p is less likely than its alternatives’) can be overcome. The challenge is the inability of CL to capture the sensitivity of even to standards of comparison (as in John is even taller than Bill, entailing that both are POS tall, cf. Greenberg 2015, 2018). Greenberg takes this challenge as one of the reasons to abandon CL and replace it with a ‘gradability-based’ semantics for even, where the comparative unlikelihood effects of even are derived from the interaction between its hardwired sensitivity to standards and the default use of ‘distributional standards’. However, in light of the popularity, simplicity and widely discussed usefulness of CL we examine here the opposite derivation: namely assuming a hardwired CL presupposition for even and deriving standard-sensitivity of even from it. Concentrating on even + comparatives with two focus placements, we show that this new derivation is partially successful, especially when CL is minimally revised by taking both p and its alternatives to be ‘unlikely’. While we conclude that CL is still unable to derive all effects of even (e.g. with ‘functional standards’), and thus does not seem to lie at the core of its scalar presupposition, our findings can help sketch when CL can be nonetheless safely used to capture the interpretational effects of even and when it cannot.}
+      \field{month}{8}
+      \field{title}{Even and {Standards} of {Comparison}}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://osf.io/u5a46/
+      \endverb
+      \verb{url}
+      \verb https://osf.io/u5a46/
+      \endverb
+      \keyw{!!!}
+    \endentry
+    \entry{douven_abduction_2017}{incollection}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=51abe70b7d159c7a96298006c91b3f79}{%
+           family={Douven},
+           familyi={D\bibinitperiod},
+           given={Igor},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=5ff1c29ff1cc8f6336533b0ffd842a79}{%
+           family={Zalta},
+           familyi={Z\bibinitperiod},
+           given={Edward\bibnamedelima N.},
+           giveni={E\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Metaphysics Research Lab, Stanford University}%
+      }
+      \strng{namehash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{fullhash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{bibnamehash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{authorbibnamehash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{authornamehash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{authorfullhash}{51abe70b7d159c7a96298006c91b3f79}
+      \strng{editorbibnamehash}{5ff1c29ff1cc8f6336533b0ffd842a79}
+      \strng{editornamehash}{5ff1c29ff1cc8f6336533b0ffd842a79}
+      \strng{editorfullhash}{5ff1c29ff1cc8f6336533b0ffd842a79}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In the philosophical literature, the term “abduction” isused in two related but different senses. In both senses, the termrefers to some form of explanatory reasoning. However, in thehistorically first sense, it refers to the place of explanatoryreasoning in generating hypotheses, while in the sense inwhich it is used most frequently in the modern literature it refers tothe place of explanatory reasoning in justifying hypotheses.In the latter sense, abduction is also often called “Inferenceto the Best Explanation.”, This entry is exclusively concerned with abduction in the modernsense, although there is a supplement on abduction in the historicalsense, which had its origin in the work of Charles SandersPeirce—see the, See also the entry on scientific discovery, in particular the section on discovery as abduction., Most philosophers agree that abduction (in the sense of Inference tothe Best Explanation) is a type of inference that is frequentlyemployed, in some form or other, both in everyday and in scientificreasoning. However, the exact form as well as the normative status ofabduction are still matters of controversy. This entry contrastsabduction with other types of inference; points at prominent uses ofit, both in and outside philosophy; considers various more or lessprecise statements of it; discusses its normative status; andhighlights possible connections between abduction and Bayesianconfirmation theory.}
+      \field{booktitle}{The {Stanford} {Encyclopedia} of {Philosophy}}
+      \field{edition}{Summer 2017}
+      \field{title}{Abduction}
+      \field{year}{2017}
+    \endentry
+    \entry{greenberg_even_2015}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=e76e1cbc2e2b959655a28f6b633d6216}{%
+           family={Greenberg},
+           familyi={G\bibinitperiod},
+           given={Yael},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{fullhash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{bibnamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authorbibnamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authornamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authorfullhash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \field{extraname}{1}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A popular view of the semantics of even takes it to presuppose that its prejacent, p, is less likely than all its contextually relevant focus alternatives, q. In this paper I point out three novel problems for this `comparative likelihood' view, having to do with (a) cases where even p is felicitous though p cannot be considered less likely than q, (b) cases where even p is infelicitous though p asymmetrically entails and is less likely than q, and (c) cases where even interacts with gradable predicates, indicating that merely requiring p to be higher on the scale than q is not enough to make even p felicitous. Instead, both p and q must also yield degrees which are at least as high as the standard of comparison. In response to these problems I develop a revised scalar presupposition for even which resembles the semantics of comparative conditionals, and which requires that for a salient x, retrieved from p, and a salient gradable property G, (i) x's degree on G is higher in all accessible p worlds than in all accessible q-and-not-p worlds and that (ii) in the latter worlds this degree is at least as high as the standard on G. I show how this presupposition accounts for both traditional observations concerning even, as well as for the novel data and propose that the common presence of `less likely' inferences with even can be indirectly derived from the common use of `distributional' standards of comparison with gradable properties. A general contribution of the proposal, then, is in attempting to apply tools from research of gradability-based phenomena for a better understanding of scalarity-based phenomena.}
+      \field{booktitle}{Proceedings of the {Amsterdam} {Colloquium} 20}
+      \field{month}{12}
+      \field{title}{Even, {Comparative} {Likelihood} and {Gradability}}
+      \field{year}{2015}
+    \endentry
+    \entry{greenberg_revised_2018}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=e76e1cbc2e2b959655a28f6b633d6216}{%
+           family={Greenberg},
+           familyi={G\bibinitperiod},
+           given={Yael},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{fullhash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{bibnamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authorbibnamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authornamehash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \strng{authorfullhash}{e76e1cbc2e2b959655a28f6b633d6216}
+      \field{extraname}{2}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper concentrates on giving precise content to the general wisdom on the scalar presupposition of even, according to which the prejacent of even, p, is stronger than its relevant focus alternatives, q. To that end I first examine both familiar challenges for the popular ‘comparative likelihood’ view of the ‘stronger than’ relation, as well as novel challenges, having to do with the context dependency of even (with entailed and non-entailed alternatives) and with its sensitivity to standards of comparison. To overcome these challenges and to account for the full range of data I develop a revised, ‘gradability-based’ scalar presupposition for even, which differs from the ‘comparative likelihood’ one in several respects: instead of directly comparing degrees to which propositions (namely p and q) are more or less likely, we compare extents to which non-focus entities x in p and q (in the accessible p worlds and the exhaustified q worlds) exceed the salient standard on a scale associated with a contextually supplied gradable property G. To capture cases where information about contrastive topics is crucial for fixing two distinct standards on G, I follow theories which view even as a general, two-place alternative-sensitive operator, allowing it to associate with both focus and contrastive topics. Beyond the ability to account for a large range of intricate felicity variations and inferences found with even, a more general contribution of the paper lies in showing the linguistic relevance of tools originally developed in the literature on gradable predicates to the semantics of scalar alternative–sensitive particles.}
+      \field{issn}{1572-865X}
+      \field{journaltitle}{Natural Language Semantics}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{A revised, gradability-based semantics for even}
+      \field{volume}{26}
+      \field{year}{2018}
+      \field{pages}{51\bibrangedash 83}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.1007/s11050-017-9140-0
+      \endverb
+      \keyw{!!!}
+    \endentry
+    \entry{karttunen_conventional_1979}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=4dc2330480061b3b4ca4266707f7c473}{%
+           family={Karttunen},
+           familyi={K\bibinitperiod},
+           given={Lauri},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=741d72c9d8085c6aaeb7e03b0cc8e07a}{%
+           family={Peters},
+           familyi={P\bibinitperiod},
+           given={Stanley},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{26ae8b4c923803bdf5227a82f466f231}
+      \strng{fullhash}{26ae8b4c923803bdf5227a82f466f231}
+      \strng{bibnamehash}{26ae8b4c923803bdf5227a82f466f231}
+      \strng{authorbibnamehash}{26ae8b4c923803bdf5227a82f466f231}
+      \strng{authornamehash}{26ae8b4c923803bdf5227a82f466f231}
+      \strng{authorfullhash}{26ae8b4c923803bdf5227a82f466f231}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Syntax and semantics}
+      \field{month}{1}
+      \field{title}{Conventional {Implicature}}
+      \field{volume}{11}
+      \field{year}{1979}
+      \field{pages}{1\bibrangedash 56}
+      \range{pages}{56}
+    \endentry
+    \entry{kennedy_vagueness_2007}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=bc94f2390d66eb60cfb8b4250e6abf85}{%
+           family={Kennedy},
+           familyi={K\bibinitperiod},
+           given={Christopher},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \strng{fullhash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \strng{bibnamehash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \strng{authorbibnamehash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \strng{authornamehash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \strng{authorfullhash}{bc94f2390d66eb60cfb8b4250e6abf85}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Linguistics and Philosophy}
+      \field{number}{1}
+      \field{shorttitle}{Vagueness and {Grammar}}
+      \field{title}{Vagueness and {Grammar}: {The} {Semantics} of {Relative} and {Absolute} {Gradable} {Adjectives}}
+      \field{volume}{30}
+      \field{year}{2007}
+      \field{pages}{1\bibrangedash 45}
+      \range{pages}{45}
+      \verb{doi}
+      \verb 10.1007/s10988-006-9008-0
+      \endverb
+    \endentry
+    \entry{lassiter_context_2013}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=f2107cb1d12ccc8e4e5e2c8bba6f24aa}{%
+           family={Lassiter},
+           familyi={L\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=17c6b9edbad988db7d426fba005cecff}{%
+           family={Goodman},
+           familyi={G\bibinitperiod},
+           given={Noah\bibnamedelima D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en-US}%
+      }
+      \strng{namehash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \strng{fullhash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \strng{bibnamehash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \strng{authorbibnamehash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \strng{authornamehash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \strng{authorfullhash}{f58d13d7a75a80c9854857ca99ef7e4b}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Relative adjectives in the positive form exhibit vagueness and context-sensitivity. We suggest that these phenomena can be explained by the interaction of a free threshold variable in the meaning of the positive form with a probabilistic model of pragmatic inference. We describe a formal model of utterance interpretation as coordination, which jointly infers the value of the threshold variable and the intended meaning of the sentence. We report simulations exploring the effect of background statistical knowledge on adjective interpretation in this model. Motivated by these simulation results, we suggest that this approach can account for the correlation between scale structure and the relative/absolute distinction while also allowing for exceptions noted in previous work. Finally, we argue for a probabilistic explanation of why the sorites paradox is compelling with relative adjectives even though the second premise is false on a universal interpretation, and show that this account predicts Kennedy’s (2007) observation that the sorites paradox is more compelling with relative than with absolute adjectives.}
+      \field{issn}{2163-5951}
+      \field{journaltitle}{Semantics and Linguistic Theory}
+      \field{month}{8}
+      \field{number}{0}
+      \field{title}{Context, scale structure, and statistics in the interpretation of positive-form adjectives}
+      \field{volume}{23}
+      \field{year}{2013}
+      \field{pages}{587\bibrangedash 610}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.3765/salt.v23i0.2658
+      \endverb
+    \endentry
+    \entry{rooth_association_1985}{unpublished}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=6ada3bcee4c8666a6ec6f96928cf91a9}{%
+           family={Rooth},
+           familyi={R\bibinitperiod},
+           given={Mats},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {GLSA, Dept. of Linguistics, University of Massachusetts, Amherst}%
+      }
+      \strng{namehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{fullhash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{bibnamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authorbibnamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authornamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authorfullhash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \field{extraname}{1}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Association with focus}
+      \field{year}{1985}
+    \endentry
+    \entry{rooth_theory_1992}{article}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=6ada3bcee4c8666a6ec6f96928cf91a9}{%
+           family={Rooth},
+           familyi={R\bibinitperiod},
+           given={Mats},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{fullhash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{bibnamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authorbibnamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authornamehash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \strng{authorfullhash}{6ada3bcee4c8666a6ec6f96928cf91a9}
+      \field{extraname}{2}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{According to the alternative semantics for focus, the semantic reflex of intonational focus is a second semantic value, which in the case of a sentence is a set of propositions. We examine a range of semantic and pragmatic applications of the theory, and extract a unitary principle specifying how the focus semantic value interacts with semantic and pragmatic processes. A strong version of the theory has the effect of making lexical or construction-specific stipulation of a focus-related effect in association-with-focus constructions impossible. Furthermore, while focus has a uniform import, the sources of meaning differences in association with focus are various.}
+      \field{issn}{0925-854X}
+      \field{journaltitle}{Natural Language Semantics}
+      \field{number}{1}
+      \field{title}{A theory of focus interpretation}
+      \field{volume}{1}
+      \field{year}{1992}
+      \field{pages}{75\bibrangedash 116}
+      \range{pages}{42}
+    \endentry
+    \entry{solt_notes_2011}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=1b260e872ff199521e6b83ec84fcd6a5}{%
+           family={Solt},
+           familyi={S\bibinitperiod},
+           given={Stephanie},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=81714ff6306d89048e5d89ac8e526e03}{%
+           family={Nouwen},
+           familyi={N\bibinitperiod},
+           given={Rick},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8c97469b3485142bfd7afd2c9394424b}{%
+           family={Rooij},
+           familyi={R\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=ce0324512aa63e86ee41e7d50119f292}{%
+           family={Sauerland},
+           familyi={S\bibinitperiod},
+           given={Uli},
+           giveni={U\bibinitperiod}}}%
+        {{hash=2db2b38dc406714b8696e8a41210f08d}{%
+           family={Schmitz},
+           familyi={S\bibinitperiod},
+           given={Hans-Christian},
+           giveni={H\bibinithyphendelim C\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{fullhash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{bibnamehash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{authorbibnamehash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{authornamehash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{authorfullhash}{1b260e872ff199521e6b83ec84fcd6a5}
+      \strng{editorbibnamehash}{f954cf19150cd099b2243a96a943fadd}
+      \strng{editornamehash}{7da1faf0793c17071e65ad6998e094a1}
+      \strng{editorfullhash}{f954cf19150cd099b2243a96a943fadd}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper investigates the role of comparison classes in the semantics of gradable adjectives in the positive form, focusing on the case where the comparison class is expressed overtly via a for-phrase (e.g. John is tall for a jockey). Two central questions are addressed: what information does the comparison class provide, and how is this information integrated compositionally? It is shown that the standard of comparison invoked by the positive form can be analyzed as a range of values whose width is based on the degree of dispersion in the comparison class. Compositionally, the comparison class can be analyzed as an argument of a null positive morpheme (contra Kennedy [13]), in parallel to recent proposals for the superlative (e.g. Heim [9]). The implications of the analysis for the choice between degree- and delineation-based analyses of gradable adjectives are discussed.}
+      \field{booktitle}{Vagueness in {Communication}}
+      \field{isbn}{978-3-642-18446-8}
+      \field{series}{Lecture {Notes} in {Computer} {Science}}
+      \field{title}{Notes on the {Comparison} {Class}}
+      \field{year}{2011}
+      \field{pages}{189\bibrangedash 206}
+      \range{pages}{18}
+      \keyw{!!!}
+    \endentry
+    \entry{toledo_absolute_2011}{article}{}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=7d2870c8f1833d93d27f2615307f8bb5}{%
+           family={Toledo},
+           familyi={T\bibinitperiod},
+           given={Assaf},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=bd87aa9a1c705b6cfba30270a6a522bf}{%
+           family={Sassoon},
+           familyi={S\bibinitperiod},
+           given={Galit\bibnamedelima W.},
+           giveni={G\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en-US}%
+      }
+      \strng{namehash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \strng{fullhash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \strng{bibnamehash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \strng{authorbibnamehash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \strng{authornamehash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \strng{authorfullhash}{b40169f7d765f3f8a62cd91ad410abd7}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper investigates core semantic properties that distinguish between different types of gradable adjectives and the effect of context on their interpretation. We contend that all gradable adjectives are interpreted relative to a comparison class (van Rooij 2011), and that it is the nature of the comparison class that constitutes the main semantic difference between their subclasses: some adjectives select a class comprised of counterparts of the individual of which the adjective is predicated, while others – an extensional category of this individual. We propose, following Kennedy (2007), that the standard of membership is selected according to a principle of economy whereby an interpretation relative to a maximum or a minimum degree within a comparison class takes precedence over one relative to an arbitrary point. This proposal captures so-called "standard shift" effects, that is, the influence of context on the interpretation of gradable adjectives from all subclasses, whether in their positive form or when modified by degree adverbials. Additionally, this proposal captures cases of apparent lack of context sensitivity (e.g. intuitive inference patterns, unacceptability of for-phrases, etc.). Finally, we hypothesize that the type of comparison class is aligned with the well known distinction between stage-level and individual-level predicates.}
+      \field{issn}{2163-5951}
+      \field{journaltitle}{Semantics and Linguistic Theory}
+      \field{month}{9}
+      \field{number}{0}
+      \field{title}{Absolute vs. {Relative} {Adjectives} - {Variance} {Within} vs. {Between} {Individuals}}
+      \field{urlday}{16}
+      \field{urlmonth}{6}
+      \field{urlyear}{2021}
+      \field{volume}{21}
+      \field{year}{2011}
+      \field{urldateera}{ce}
+      \field{pages}{135\bibrangedash 154}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.3765/salt.v21i0.2587
+      \endverb
+      \verb{urlraw}
+      \verb http://journals.linguisticsociety.org/proceedings/index.php/SALT/article/view/2587
+      \endverb
+      \verb{url}
+      \verb http://journals.linguisticsociety.org/proceedings/index.php/SALT/article/view/2587
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

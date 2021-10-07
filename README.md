@@ -1,4 +1,4 @@
-# Tonal-Cues
+# GP2: Secondary cues for tonal identification
 
 This is to keep track of my experimental phonetics project on whispered speech in Manadrin for my second Generals Paper requirement. This folder encloses
 

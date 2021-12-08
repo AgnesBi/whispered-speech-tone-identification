@@ -4,24 +4,24 @@
 # pop-up settings window
 form Modify durations of labeled segments in files
 	comment Directory of sound files
-	text sound_directory /Users/agnesbi/Desktop/Exp2_Stimuli/
+	text sound_directory /Users/agnesbi/Desktop/Temp/DW_unaltered/
 	sentence Sound_file_extension .wav
 	comment Directory of TextGrid files
-	text textGrid_directory /Users/agnesbi/Desktop/Exp2_Stimuli/
+	text textGrid_directory /Users/agnesbi/Desktop/Temp/DW_unaltered/
 	sentence TextGrid_file_extension .TextGrid
 	comment Directory for modified files
-	text output_directory /Users/agnesbi/Desktop/Exp2_Stimuli/output/
+	text output_directory /Users/agnesbi/Desktop/Temp/DW_long/
 	comment Which tier do you want to analyze?
 	positive Tier 1
    	## Specify the normalized duration
    	comment Target duration (s)
-	positive duration_target 0.2	
+	positive duration_target 0.303	
 endform
 
 # Here, you make a listing of all the sound files in a directory.
 # The example gets file names ending with ".wav" from D:\tmp\
 
-Create Strings as file list... list *'sound_file_extension$'
+Create Strings as file list... list 'sound_directory$'*'sound_file_extension$'
 numberOfFiles = Get number of strings
 
 for ifile to numberOfFiles
@@ -66,7 +66,7 @@ for ifile to numberOfFiles
 			# generate the new sound object
 			Get resynthesis (overlap-add)
 			# save the duration-modified sound file
-			Save as WAV file: output_directory$ + baseFile$ + "mod" + sound_file_extension$
+			Save as WAV file: output_directory$ + baseFile$ + "_303ms" + sound_file_extension$
 			Remove
 			select Manipulation 'baseFile$'
 			plus Sound 'baseFile$'

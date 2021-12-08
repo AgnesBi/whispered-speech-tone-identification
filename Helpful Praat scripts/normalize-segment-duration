@@ -1,0 +1,79 @@
+# Change duration for all segmented items
+# Script by Edward Flemming
+
+# pop-up settings window
+form Modify durations of labeled segments in files
+	comment Directory of sound files
+	text sound_directory /Users/agnesbi/Desktop/Exp2_Stimuli/
+	sentence Sound_file_extension .wav
+	comment Directory of TextGrid files
+	text textGrid_directory /Users/agnesbi/Desktop/Exp2_Stimuli/
+	sentence TextGrid_file_extension .TextGrid
+	comment Directory for modified files
+	text output_directory /Users/agnesbi/Desktop/Exp2_Stimuli/output/
+	comment Which tier do you want to analyze?
+	positive Tier 1
+   	## Specify the normalized duration
+   	comment Target duration (s)
+	positive duration_target 0.2	
+endform
+
+# Here, you make a listing of all the sound files in a directory.
+# The example gets file names ending with ".wav" from D:\tmp\
+
+Create Strings as file list... list *'sound_file_extension$'
+numberOfFiles = Get number of strings
+
+for ifile to numberOfFiles
+   	select Strings list
+	filename$ = Get string... ifile
+	# A sound file is opened from the listing:
+	Read from file... 'sound_directory$''filename$'
+	baseFile$ = filename$ - "'Sound_file_extension$'"
+	# Open a TextGrid by the same name:
+	gridfile$ = "'textGrid_directory$''baseFile$''textGrid_file_extension$'"
+
+		Read from file... 'gridfile$'
+		numberOfIntervals = Get number of intervals... tier
+		# Pass through all intervals in the selected tier:
+		for interval from 1 to numberOfIntervals
+			select TextGrid 'baseFile$'
+			label$ = Get label of interval... tier interval
+			# if the interval is labeled then modify its duration
+			# you could specify a particular label here
+			if label$ <> ""
+				start = Get starting point: tier, interval
+				end = Get end point: tier, interval
+				writeInfoLine: start
+				appendInfo: end
+				select Sound 'baseFile$'
+				To Manipulation... 0.01 75 400
+				Extract duration tier
+				ratio = duration_target/(end-start)
+				appendInfo: ratio
+				select DurationTier 'baseFile$'
+				Add point... (start-0.0001) 1
+				Add point... start ratio
+				Add point... end ratio
+				Add point... (end+0.0001) 1
+				select Manipulation 'baseFile$'
+				plus DurationTier 'baseFile$'
+				Replace duration tier
+
+			endif
+		endfor
+			select Manipulation 'baseFile$'
+			# generate the new sound object
+			Get resynthesis (overlap-add)
+			# save the duration-modified sound file
+			Save as WAV file: output_directory$ + baseFile$ + "mod" + sound_file_extension$
+			Remove
+			select Manipulation 'baseFile$'
+			plus Sound 'baseFile$'
+			plus TextGrid 'baseFile$'
+			plus DurationTier 'baseFile$'
+			Remove
+endfor
+	
+
+

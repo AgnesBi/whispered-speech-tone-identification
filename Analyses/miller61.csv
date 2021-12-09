@@ -1,0 +1,7 @@
+,MidLevel,LowFailling,HighRising,HighBroken,LowRising,LowDipped
+MidLevel,41,28,21,13,16,19
+LowFalling,15,83,3,3,15,21
+HighRising,25,20,42,11,23,16
+HighBroken,3,3,15,63,34,35
+LowRising,18,25,3,34,29,10
+LowDipped,9,1,6,13,16,92
